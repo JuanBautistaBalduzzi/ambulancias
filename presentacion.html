@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Asignación Inteligente de Ambulancias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        /* Flujo Principal */
+        .flujo-principal {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .flujo-principal h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .flujo-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: center;
+        }
+
+        .paso {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .paso .numero {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .paso h3 {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .paso p {
+            font-size: 0.9em;
+            opacity: 0.95;
+        }
+
+        .paso::after {
+            content: "→";
+            position: absolute;
+            right: -25px;
+            font-size: 2em;
+            color: #667eea;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .paso:last-child::after {
+            display: none;
+        }
+
+        /* Módulos */
+        .modulos-section {
+            margin-bottom: 40px;
+        }
+
+        .modulos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .modulo {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #667eea;
+        }
+
+        .modulo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .modulo-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .modulo h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .modulo ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modulo ul li {
+            padding: 8px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modulo ul li:last-child {
+            border-bottom: none;
+        }
+
+        .modulo ul li::before {
+            content: "✓ ";
+            color: #764ba2;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* Diferencial IA */
+        .diferencial {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .diferencial h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .diferencial-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .diferencial-text h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .diferencial-text p {
+            font-size: 1.05em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .diferencial-features {
+            list-style: none;
+        }
+
+        .diferencial-features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1em;
+        }
+
+        .diferencial-features li::before {
+            content: "🧠";
+            position: absolute;
+            left: 0;
+        }
+
+        .ia-diagram {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .ia-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ia-box {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .ia-box.entrada {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .ia-arrow {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        /* Arquitectura */
+        .arquitectura {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .arquitectura h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .arquitectura-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .arch-component {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .arch-component h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .arch-component p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .responsabilidades {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .responsabilidades h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .resp-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .resp-item:last-child {
+            border-bottom: none;
+        }
+
+        .resp-label {
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .resp-desc {
+            color: #555;
+        }
+
+        /* Beneficios */
+        .beneficios {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .beneficios h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .beneficios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .beneficio-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .beneficio-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .beneficio-card h4 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .beneficio-card p {
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .flujo-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .paso::after {
+                display: none;
+            }
+
+            .diferencial-content {
+                grid-template-columns: 1fr;
+            }
+
+            .arquitectura-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .resp-item {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🚑 Sistema de Asignación Inteligente de Ambulancias</h1>
+            <p class="subtitle">Plataforma Integral de Gestión y Optimización de Servicios de Emergencia</p>
+            <div class="tagline">🤖 Impulsado por Inteligencia Artificial</div>
+        </header>
+
+        <!-- Flujo Principal -->
+        <div class="flujo-principal">
+            <h2>Flujo del Sistema</h2>
+            <div class="flujo-steps">
+                <div class="paso">
+                    <div class="numero">1</div>
+                    <h3>Llamada Recibida</h3>
+                    <p>Operario carga caso y triage</p>
+                </div>
+                <div class="paso">
+                    <div class="numero">2</div>
+                    <h3>Análisis IA</h3>
+                    <p>Modelo estima tiempo de atención</p>
+                </div>
+                <div class="paso">
+                    <div class="numero">3</div>
+                    <h3>Recomendación</h3>
+                    <p>Sugiere mejor ambulancia</p>
+                </div>
+                <div class="paso">
+                    <div class="numero">4</div>
+                    <h3>Asignación</h3>
+                    <p>Operario asigna y notifica</p>
+                </div>
+                <div class="paso">
+                    <div class="numero">5</div>
+                    <h3>Ejecución</h3>
+                    <p>Ambulanciero recibe ruta</p>
+                </div>
+                <div class="paso">
+                    <div class="numero">6</div>
+                    <h3>Seguimiento</h3>
+                    <p>Monitoreo y alertas en tiempo real</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Módulos Principales -->
+        <div class="modulos-section">
+            <h2 style="color: white; text-align: center; margin-bottom: 30px; font-size: 2em;">Módulos del Sistema</h2>
+            <div class="modulos-grid">
+                <div class="modulo">
+                    <div class="modulo-icon">📍</div>
+                    <h3>Centro de Control</h3>
+                    <ul>
+                        <li>Monitoreo GPS en tiempo real</li>
+                        <li>Visualización de todas las ambulancias</li>
+                        <li>Gestión de casos</li>
+                        <li>Panel de control intuitivo</li>
+                    </ul>
+                </div>
+
+                <div class="modulo" style="border-left-color: #f5576c;">
+                    <div class="modulo-icon">🧠</div>
+                    <h3>Motor de Recomendación IA</h3>
+                    <ul>
+                        <li>Análisis de preguntas de triage</li>
+                        <li>Estimación de tiempo de atención</li>
+                        <li>Cálculo de horario de liberación</li>
+                        <li>Sugerencia optimizada por ambulancia</li>
+                    </ul>
+                </div>
+
+                <div class="modulo" style="border-left-color: #f093fb;">
+                    <div class="modulo-icon">📱</div>
+                    <h3>App Ambulanciero</h3>
+                    <ul>
+                        <li>Ruta más rápida automática</li>
+                        <li>Integración con Google Maps</li>
+                        <li>Checkeo de llegada</li>
+                        <li>Registro de fin de atención</li>
+                    </ul>
+                </div>
+
+                <div class="modulo" style="border-left-color: #667eea;">
+                    <div class="modulo-icon">📊</div>
+                    <h3>Módulo de Facturación</h3>
+                    <ul>
+                        <li>Histórico completo de asignaciones</li>
+                        <li>Cálculo de facturación por proveedor</li>
+                        <li>Generación de notas de cobro</li>
+                        <li>Reportes de desempeño</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diferencial IA -->
+        <div class="diferencial">
+            <h2>⭐ El Diferencial: Sugerencia Inteligente</h2>
+            <div class="diferencial-content">
+                <div class="diferencial-text">
+                    <h3>Cómo Funciona</h3>
+                    <p>Nuestro modelo de inteligencia artificial aprende de cada interacción para mejorar continuamente las asignaciones.</p>
+                    
+                    <ul class="diferencial-features">
+                        <li><strong>Entrenamiento Continuo:</strong> Datos del triage + tiempo real de atención</li>
+                        <li><strong>Predicción Precisa:</strong> Estimación de tiempo de atención para cada caso</li>
+                        <li><strong>Optimización Inteligente:</strong> Considera disponibilidad y tiempos de desplazamiento</li>
+                        <li><strong>Alertas Automáticas:</strong> Notificación si se excede el tiempo estimado</li>
+                        <li><strong>Aprendizaje Adaptativo:</strong> Mejora con cada caso procesado</li>
+                    </ul>
+                </div>
+
+                <div class="ia-diagram">
+                    <div class="ia-flow">
+                        <div class="ia-box entrada">📋 Preguntas de Triage</div>
+                        <div class="ia-arrow">⬇️</div>
+                        <div class="ia-box">🧠 Modelo IA Entrenado</div>
+                        <div class="ia-arrow">⬇️</div>
+                        <div class="ia-box">⏱️ Estimación de Tiempo</div>
+                        <div class="ia-arrow">⬇️</div>
+                        <div class="ia-box">🚑 Sugerencia Ambulancia Óptima</div>
+                        <div class="ia-arrow">⬇️</div>
+                        <div class="ia-box">✅ Asignación Confirmada</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arquitectura y Responsabilidades -->
+        <div class="arquitectura">
+            <h2>Arquitectura y Responsabilidades</h2>
+            
+            <div class="arquitectura-grid">
+                <div class="arch-component">
+                    <h4>📱 Frontend</h4>
+                    <p>Interfaz operario y ambulanciero</p>
+                </div>
+                <div class="arch-component">
+                    <h4>🤖 IA/ML</h4>
+                    <p>Motor de recomendación inteligente</p>
+                </div>
+                <div class="arch-component">
+                    <h4>🗺️ Geolocalización</h4>
+                    <p>Google Maps API</p>
+                </div>
+                <div class="arch-component">
+                    <h4>💾 Backend</h4>
+                    <p>Servidor y lógica de negocio</p>
+                </div>
+            </div>
+
+            <div class="responsabilidades">
+                <h3>Separación de Responsabilidades</h3>
+                
+                <div class="resp-item">
+                    <div class="resp-label">🖥️ Centro de Control</div>
+                    <div class="resp-desc">Monitoreo, recepción de casos, carga de información del triage, visualización de recomendaciones, confirmación de asignación</div>
+                </div>
+
+                <div class="resp-item">
+                    <div class="resp-label">🧠 Motor IA</div>
+                    <div class="resp-desc">Análisis de datos históricos, entrenamiento del modelo, predicción de tiempos de atención, cálculo de horarios de liberación</div>
+                </div>
+
+                <div class="resp-item">
+                    <div class="resp-label">🗺️ Módulo Geolocalización</div>
+                    <div class="resp-desc">Cálculo de rutas óptimas, integración con Google Maps, ETA en tiempo real, distancias entre puntos</div>
+                </div>
+
+                <div class="resp-item">
+                    <div class="resp-label">📱 App Ambulanciero</div>
+                    <div class="resp-desc">Recepción de asignaciones, navegación GPS, confirmación de llegada y fin de atención, alertas en tiempo real</div>
+                </div>
+
+                <div class="resp-item">
+                    <div class="resp-label">📊 Módulo Facturación</div>
+                    <div class="resp-desc">Almacenamiento de históricos, consulta de datos, cálculo de facturación por proveedor, generación de notas de cobro</div>
+                </div>
+
+                <div class="resp-item">
+                    <div class="resp-label">💾 Base de Datos</div>
+                    <div class="resp-desc">Almacenamiento centralizado de casos, asignaciones, atenciones, historial de ambulancias y ambulancieros</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beneficios -->
+        <div class="beneficios">
+            <h2>Beneficios Clave</h2>
+            <div class="beneficios-grid">
+                <div class="beneficio-card">
+                    <div class="beneficio-icon">⚡</div>
+                    <h4>Reducción de Tiempos</h4>
+                    <p>Asignación automática y rutas optimizadas reducen tiempos de respuesta</p>
+                </div>
+
+                <div class="beneficio-card">
+                    <div class="beneficio-icon">📈</div>
+                    <h4>Mayor Eficiencia</h4>
+                    <p>Optimización de recursos y distribución equilibrada de carga</p>
+                </div>
+
+                <div class="beneficio-card">
+                    <div class="beneficio-icon">💰</div>
+                    <h4>Control de Costos</h4>
+                    <p>Facturación precisa y seguimiento de desempeño por proveedor</p>
+                </div>
+
+                <div class="beneficio-card">
+                    <div class="beneficio-icon">👁️</div>
+                    <h4>Visibilidad Total</h4>
+                    <p>Monitoreo en tiempo real de toda la operación</p>
+                </div>
+
+                <div class="beneficio-card">
+                    <div class="beneficio-icon">🎯</div>
+                    <h4>Precisión Predictiva</h4>
+                    <p>Estimaciones de tiempo cada vez más precisas gracias a IA</p>
+                </div>
+
+                <div class="beneficio-card">
+                    <div class="beneficio-icon">📊</div>
+                    <h4>Trazabilidad Completa</h4>
+                    <p>Histórico detallado para análisis y auditoría</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Sistema de Asignación Inteligente de Ambulancias | Presentación 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
