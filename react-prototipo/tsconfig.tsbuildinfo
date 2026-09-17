@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/components/appheader.tsx","./src/components/dispatchmap.tsx","./src/components/modal.tsx","./src/hooks/usetheme.ts","./src/screens/cargascreen.tsx","./src/screens/facturacionscreen.tsx","./src/screens/metricasscreen.tsx","./src/screens/operadorscreen.tsx"],"version":"5.9.3"}

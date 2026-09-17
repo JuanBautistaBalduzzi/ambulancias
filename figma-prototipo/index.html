@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototipo Figma | Sistema de Ambulancias</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="workspace">
+    <header class="toolbar">
+      <div class="brand">
+        <div class="badge">Prototype</div>
+        <div>
+          <h1>Sistema de ambulancias</h1>
+          <p>Flujo completo de carga, despacho, métricas y facturación en un board tipo Figma.</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#artboard-intake">Carga</a>
+        <a href="#artboard-dispatch">Operador</a>
+        <a href="#artboard-metrics">Métricas</a>
+        <a href="#artboard-billing">Facturación</a>
+        <a href="#screen-gallery">Pantallas</a>
+      </nav>
+    </header>
+
+    <aside class="sidebar">
+      <div class="side-card active" data-target="artboard-intake">
+        <span class="step">01</span>
+        <div>
+          <strong>Carga de servicio</strong>
+          <p>Paciente, síntomas, categorización y traslado programado.</p>
+        </div>
+      </div>
+      <div class="side-card" data-target="artboard-dispatch">
+        <span class="step">02</span>
+        <div>
+          <strong>Despacho</strong>
+          <p>Filtros, ETA, ambulancias activas y sugerencia rápida.</p>
+        </div>
+      </div>
+      <div class="side-card" data-target="artboard-metrics">
+        <span class="step">03</span>
+        <div>
+          <strong>Métricas</strong>
+          <p>Promedios, recategorizaciones y estados operativos.</p>
+        </div>
+      </div>
+      <div class="side-card" data-target="artboard-billing">
+        <span class="step">04</span>
+        <div>
+          <strong>Facturación</strong>
+          <p>Codificación, liquidación, previsualización y listados.</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="board">
+      <section class="flow-map">
+        <div class="flow-node">Ingreso</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node">Triage</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node">Despacho</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node">Atención</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node">Facturación</div>
+      </section>
+
+      <section class="artboard" id="artboard-intake">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Pantalla 01</span>
+            <h2>Carga de servicio</h2>
+            <p>Alta de emergencia o traslado con autocompletado del paciente, síntomas seleccionables y categoría sugerida editable.</p>
+          </div>
+          <div class="frame-chip">Servicio abierto</div>
+        </div>
+
+        <div class="screen-grid intake-grid">
+          <div class="screen-panel panel-large">
+            <div class="panel-title">Buscar paciente</div>
+            <div class="input-row"><span>Nombre, apellido o DNI</span><span>Autocomplete</span></div>
+            <div class="patient-card">
+              <div>
+                <strong>María Pérez</strong>
+                <span>DNI 34.988.721 · OSDE · Av. Córdoba 1543</span>
+              </div>
+              <div class="ok-pill">Coincidencia exacta</div>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label>Nombre</label><div class="input-row"><span>María</span><span>Edit.</span></div></div>
+              <div class="field"><label>Apellido</label><div class="input-row"><span>Pérez</span><span>Edit.</span></div></div>
+              <div class="field"><label>DNI</label><div class="input-row"><span>34988721</span><span>Validado</span></div></div>
+              <div class="field"><label>Obra social</label><div class="input-row"><span>OSDE</span><span>Autocompletada</span></div></div>
+            </div>
+          </div>
+
+          <div class="screen-panel">
+            <div class="panel-title">Síntomas</div>
+            <div class="chip-grid">
+              <span class="chip active">Dolor de pecho</span>
+              <span class="chip active">Disnea</span>
+              <span class="chip">Fiebre</span>
+              <span class="chip">Trauma</span>
+              <span class="chip">Desmayo</span>
+              <span class="chip">Hemorragia</span>
+              <span class="chip">Debilidad</span>
+              <span class="chip">Convulsión</span>
+            </div>
+            <div class="suggestion-card">
+              <span class="tag warn">Sugerido</span>
+              <strong>Emergencia crítica</strong>
+              <p>Se puede cambiar la categoría dejando una descripción del motivo.</p>
+              <div class="input-row subtle"><span>Motivo del cambio: paciente estable, sin dolor intenso</span><span>Editar</span></div>
+            </div>
+          </div>
+
+          <div class="screen-panel">
+            <div class="panel-title">Tipo de servicio</div>
+            <div class="mode-toggle">
+              <div class="mode active">Emergencia</div>
+              <div class="mode">Traslado</div>
+            </div>
+            <div class="field"><label>Destino</label><div class="input-row"><span>Hospital San Juan</span><span>Solo si traslado</span></div></div>
+            <div class="field"><label>Fecha / hora</label><div class="input-row"><span>20/07/2026 · 18:30</span><span>Programado</span></div></div>
+            <div class="field"><label>Dirección de origen</label><div class="input-row"><span>Av. Corrientes 412</span><span>Mapa</span></div></div>
+            <div class="alert-box">Guardar caso y enviar al despacho cuando quede confirmado.</div>
+          </div>
+
+          <div class="screen-panel panel-wide">
+            <div class="panel-title">Guardia y móviles</div>
+            <div class="upload-box">
+              <div class="upload-icon">⬆</div>
+              <div>
+                <strong>Subir Excel de guardia</strong>
+                <p>Ambulancias, turnos, estado, zonas y disponibilidad por horario.</p>
+              </div>
+            </div>
+            <div class="table-mini">
+              <div><span>A-14</span><strong>Centro</strong></div>
+              <div><span>B-03</span><strong>Norte</strong></div>
+              <div><span>C-11</span><strong>Sur</strong></div>
+              <div><span>D-08</span><strong>Guardia nocturna</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="connector-row">
+        <div class="connector-card">
+          <span>Flujo</span>
+          <strong>Alta del caso</strong>
+          <p>Se completa el incidente y pasa al operador.</p>
+        </div>
+        <div class="connector-line"></div>
+        <div class="connector-card accent">
+          <span>Flujo</span>
+          <strong>Despliegue en despacho</strong>
+          <p>El operador ve ETA, estado y cobertura.</p>
+        </div>
+      </div>
+
+      <section class="artboard" id="artboard-dispatch">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Pantalla 02</span>
+            <h2>Operador y asignación</h2>
+            <p>Visualización de incidentes, filtros por categorización, zona y ambulancia asignada, orden por fecha/hora, ambulancias activas y sugerencia rápida con ETA estimada.</p>
+          </div>
+          <div class="frame-chip">Solo activos en el horario</div>
+        </div>
+
+        <div class="screen-grid dispatch-grid">
+          <div class="screen-panel">
+            <div class="panel-title">Incidentes</div>
+            <div class="filter-row">
+              <div class="mini-filter">Categoría</div>
+              <div class="mini-filter">Zona</div>
+              <div class="mini-filter">Ambulancia asignada</div>
+              <div class="mini-filter">Estado</div>
+              <div class="mini-filter">Orden fecha/hora</div>
+            </div>
+            <div class="incident-list">
+              <div class="list-row"><span class="dot red"></span><div><strong>Emergencia crítica</strong><small>Zona Norte · 09:42</small></div><span class="status warn">Pendiente</span></div>
+              <div class="list-row"><span class="dot orange"></span><div><strong>Traslado programado</strong><small>Zona Centro · 10:15</small></div><span class="status">Asignado</span></div>
+              <div class="list-row"><span class="dot green"></span><div><strong>Emergencia menor</strong><small>Zona Sur · 10:28</small></div><span class="status ok">En camino</span></div>
+            </div>
+          </div>
+
+          <div class="screen-panel panel-large">
+            <div class="panel-title">Mapa operativo</div>
+            <div class="map-canvas">
+              <div class="map-grid"></div>
+              <div class="map-pin p1"></div>
+              <div class="map-pin p2"></div>
+              <div class="map-pin p3"></div>
+              <div class="map-route"></div>
+              <div class="map-caption">Cada ambulancia muestra ubicación, zona y tiempo estimado de llegada.</div>
+            </div>
+            <div class="ambulance-strip">
+              <div class="ambulance-card active">
+                <span>A-14</span>
+                <strong>ETA 8 min</strong>
+                <small>Disponible ahora</small>
+              </div>
+              <div class="ambulance-card">
+                <span>B-03</span>
+                <strong>ETA 11 min</strong>
+                <small>Activa en el turno</small>
+              </div>
+              <div class="ambulance-card muted">
+                <span>C-11</span>
+                <strong>No disponible</strong>
+                <small>Fuera de horario</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-panel">
+            <div class="panel-title">Asignación rápida</div>
+            <div class="dispatch-card highlight">
+              <span class="tag ok">Sugerida</span>
+              <strong>Ambulancia A-14</strong>
+              <p>La menor ETA para este caso y disponible en el horario activo.</p>
+            </div>
+            <div class="eta-list">
+              <div class="eta-row"><span>A-14</span><strong>8 min</strong></div>
+              <div class="eta-row"><span>B-03</span><strong>11 min</strong></div>
+              <div class="eta-row"><span>D-08</span><strong>15 min</strong></div>
+            </div>
+            <div class="alert-box">Solo se habilitan para asignar las ambulancias activas dentro del turno vigente.</div>
+            <div class="field"><label>Ida y vuelta</label><div class="input-row"><span>Requerido para traslado</span><span>Sí / No</span></div></div>
+            <div class="action-row">
+              <div class="button primary">Asignar ahora</div>
+              <div class="button">Ver detalle</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="connector-row reverse">
+        <div class="connector-card">
+          <span>Flujo</span>
+          <strong>Resultado operativo</strong>
+          <p>Los estados alimentan analítica y facturación.</p>
+        </div>
+        <div class="connector-line"></div>
+        <div class="connector-card accent">
+          <span>Flujo</span>
+          <strong>Métricas + liquidación</strong>
+          <p>Se mide desempeño y se monetiza el servicio.</p>
+        </div>
+      </div>
+
+      <section class="artboard" id="artboard-metrics">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Pantalla 03</span>
+            <h2>Métricas operativas</h2>
+            <p>Panel para ajustar el tiempo y observar tiempos promedio por categoría, recategorizaciones, ambulancias activas y pedidos en distintos estados.</p>
+          </div>
+          <div class="frame-chip">Periodo ajustable</div>
+        </div>
+
+        <div class="metrics-top">
+          <div class="metric-card"><strong>14m</strong><span>Tiempo promedio de llegada</span></div>
+          <div class="metric-card"><strong>28m</strong><span>Tiempo promedio de atención</span></div>
+          <div class="metric-card"><strong>37</strong><span>Casos recategorizados</span></div>
+          <div class="metric-card"><strong>19</strong><span>Ambulancias activas</span></div>
+          <div class="metric-card"><strong>124</strong><span>Pedidos por estado</span></div>
+        </div>
+
+        <div class="screen-grid metrics-grid">
+          <div class="screen-panel panel-large">
+            <div class="panel-title">Promedios por categoría</div>
+            <div class="chart">
+              <div class="bar b1"></div>
+              <div class="bar b2"></div>
+              <div class="bar b3"></div>
+              <div class="bar b4"></div>
+              <div class="bar b5"></div>
+            </div>
+            <div class="chart-legend">
+              <span>Emergencia</span><span>Urgente</span><span>Traslado</span><span>Programado</span><span>Estable</span>
+            </div>
+          </div>
+
+          <div class="screen-panel">
+            <div class="panel-title">Cambios del periodo</div>
+            <div class="timeline">
+              <div class="timeline-item"><span class="dot green"></span><div><strong>Promedio de llegada</strong><small>Se calcula por categoría y zona.</small></div></div>
+              <div class="timeline-item"><span class="dot orange"></span><div><strong>Promedio de atención</strong><small>Incluye permanencia y traslado.</small></div></div>
+              <div class="timeline-item"><span class="dot red"></span><div><strong>Recategorizaciones</strong><small>Casos editados con motivo.</small></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="artboard" id="artboard-billing">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Pantalla 04</span>
+            <h2>Facturación y liquidaciones</h2>
+            <p>Un módulo para cargar valores por código desde administración, previsualizar los totales y luego emitir facturas o liquidaciones por prestador o ambulancia.</p>
+          </div>
+          <div class="frame-chip">PAMI, obras sociales y privados</div>
+        </div>
+
+        <div class="billing-grid">
+          <div class="screen-panel">
+            <div class="panel-title">Códigos y valores</div>
+            <div class="code-list">
+              <div class="code-row"><div><strong>101</strong><small>Emergencia básica</small></div><span>$18.500</span></div>
+              <div class="code-row"><div><strong>212</strong><small>Traslado programado</small></div><span>$24.000</span></div>
+              <div class="code-row"><div><strong>330</strong><small>Guardia / cobertura</small></div><span>$15.000</span></div>
+              <div class="code-row"><div><strong>415</strong><small>Ida y vuelta</small></div><span>$31.000</span></div>
+            </div>
+          </div>
+
+          <div class="screen-panel panel-large">
+            <div class="panel-title">Previsualización antes de liquidar</div>
+            <div class="preview-box">
+              <div class="preview-line"><span>Pagador</span><strong>PAMI</strong></div>
+              <div class="preview-line"><span>Servicios</span><strong>24 casos</strong></div>
+              <div class="preview-line"><span>Base</span><strong>$612.000</strong></div>
+              <div class="preview-line"><span>Ajustes</span><strong>-$18.000</strong></div>
+              <div class="preview-line total"><span>Total estimado</span><strong>$594.000</strong></div>
+            </div>
+            <div class="action-row">
+              <div class="button primary">Emitir factura</div>
+              <div class="button">Liquidar ambulancias</div>
+            </div>
+          </div>
+
+          <div class="screen-panel">
+            <div class="panel-title">Facturas y liquidaciones</div>
+            <div class="doc-list">
+              <div class="doc-row"><strong>Factura #0182</strong><small>Swiss Medical · Julio</small><span class="status ok">Emitida</span></div>
+              <div class="doc-row"><strong>Liquidación #044</strong><small>Ambulancia A-14</small><span class="status">Pendiente</span></div>
+              <div class="doc-row"><strong>Factura #0183</strong><small>PAMI · Emergencias</small><span class="status ok">Emitida</span></div>
+              <div class="doc-row"><strong>Liquidación #045</strong><small>Ambulancia B-03</small><span class="status warn">En revisión</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="artboard gallery-board" id="screen-gallery">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Pantallas individuales</span>
+            <h2>Archivos nuevos por modulo</h2>
+            <p>El board general queda como mapa maestro y cada pantalla principal también se abre en su propio archivo, como en un prototipo real de Figma.</p>
+          </div>
+          <div class="frame-chip">4 archivos nuevos</div>
+        </div>
+
+        <div class="screen-gallery-grid">
+          <a class="screen-card" href="screens/carga.html">
+            <div class="screen-thumb intake-thumb"></div>
+            <div>
+              <strong>Carga de servicio</strong>
+              <p>Paciente, sintomas, traslado y guardia.</p>
+            </div>
+          </a>
+          <a class="screen-card" href="screens/operador.html">
+            <div class="screen-thumb dispatch-thumb"></div>
+            <div>
+              <strong>Operador</strong>
+              <p>Asignacion, ETA, filtros y mapa.</p>
+            </div>
+          </a>
+          <a class="screen-card" href="screens/metricas.html">
+            <div class="screen-thumb metrics-thumb"></div>
+            <div>
+              <strong>Metricas</strong>
+              <p>KPIs, categorias y estados.</p>
+            </div>
+          </a>
+          <a class="screen-card" href="screens/facturacion.html">
+            <div class="screen-thumb billing-thumb"></div>
+            <div>
+              <strong>Facturacion</strong>
+              <p>Codigos, liquidaciones y totales.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

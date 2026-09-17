@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operador | Sistema de Ambulancias</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="screen-page">
+    <header class="toolbar">
+      <div class="brand">
+        <div class="badge">02</div>
+        <div>
+          <h1>Operador y asignacion</h1>
+          <p>Filtrar incidentes, ver ambulancias activas y asignar con ETA estimada.</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="../index.html">Board</a>
+        <a href="carga.html">Carga</a>
+        <a href="metricas.html">Metricas</a>
+        <a href="facturacion.html">Facturacion</a>
+      </nav>
+    </header>
+
+    <nav class="screen-subnav" aria-label="Navegacion interna de operador">
+      <a href="#operador-incidentes" class="active">Incidentes</a>
+      <a href="#operador-mapa">Mapa y moviles</a>
+      <a href="#operador-asignacion">Asignacion</a>
+      <a href="#operador-ux">Automatizaciones</a>
+    </nav>
+
+    <section class="page-hero">
+      <div class="artboard compact-artboard">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Operacion diaria</span>
+            <h2>Despacho asistido</h2>
+            <p>Los incidentes se ordenan por prioridad y hora. La vista combina filtros, mapa operativo y sugerencia rapida de la ambulancia con menor ETA.</p>
+          </div>
+          <div class="frame-chip">Solo activos</div>
+        </div>
+        <div class="mini-flow">
+          <div class="flow-node">Incidentes</div>
+          <div class="flow-node">ETA</div>
+          <div class="flow-node">Asignar</div>
+          <div class="flow-node">Estado</div>
+        </div>
+      </div>
+      <div class="page-links">
+        <a href="../index.html#screen-gallery">Volver al board</a>
+        <a href="carga.html">Ir a carga</a>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="operador-tabs">
+      <span class="section-label">Centro de despacho</span>
+      <div class="module-tabs" data-tab-group="operador-main">
+        <div class="tab-navbar" role="tablist" aria-label="Vistas del operador">
+          <button class="tab-btn active" type="button" data-tab-target="casos">Casos entrantes</button>
+          <button class="tab-btn" type="button" data-tab-target="mapa">Ambulancias en mapa</button>
+          <button class="tab-btn" type="button" data-tab-target="turnos">Turnos y disponibilidad</button>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel" data-tab-panel="casos">
+            <div class="screen-panel compact">
+              <div class="panel-title">Casos en cola para asignar</div>
+              <div class="table-compact">
+                <div class="table-head"><span>Incidente</span><span>Zona</span><span>Categoria</span><span>Hora</span><span>Accion</span></div>
+                <div class="table-row-compact" data-case-row data-case-id="caso-001" data-case-name="Emergencia critica" data-case-zone="Norte" data-case-time="09:42">
+                  <strong>Emergencia critica</strong>
+                  <span>Norte</span>
+                  <span>Alta</span>
+                  <span>09:42</span>
+                  <button class="button" type="button" data-select-case="caso-001">Tomar caso</button>
+                </div>
+                <div class="table-row-compact" data-case-row data-case-id="caso-002" data-case-name="Traslado programado" data-case-zone="Centro" data-case-time="10:15">
+                  <strong>Traslado programado</strong>
+                  <span>Centro</span>
+                  <span>Media</span>
+                  <span>10:15</span>
+                  <button class="button" type="button" data-select-case="caso-002">Tomar caso</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="mapa" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Vista de mapa operativo</div>
+              <div class="map-canvas compact">
+                <div class="map-grid"></div>
+                <div class="map-pin p1"></div>
+                <div class="map-pin p2"></div>
+                <div class="map-pin p3"></div>
+                <div class="map-route"></div>
+                <div class="map-caption tight">Ubicaciones en tiempo real para decidir asignacion con menor ETA.</div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="turnos" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Disponibilidad por turno activo</div>
+              <div class="table-compact">
+                <div class="table-head"><span>Movil</span><span>Turno</span><span>Zona</span><span>ETA</span><span>Accion</span></div>
+                <div class="table-row-compact" data-mobile-row data-mobile-id="A-14" data-mobile-eta="8 min" data-mobile-zone="Centro"><strong>A-14</strong><span>Activo</span><span>Centro</span><span>8 min</span><button class="button" type="button" data-select-mobile="A-14">Elegir</button></div>
+                <div class="table-row-compact" data-mobile-row data-mobile-id="B-03" data-mobile-eta="11 min" data-mobile-zone="Norte"><strong>B-03</strong><span>Activo</span><span>Norte</span><span>11 min</span><button class="button" type="button" data-select-mobile="B-03">Elegir</button></div>
+                <div class="table-row-compact"><strong>C-11</strong><span>Fuera</span><span>Sur</span><span>--</span><span class="status warn">No disponible</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-panel compact">
+          <div class="panel-title">Asignacion simulada en vivo</div>
+          <div class="variant-grid">
+            <div class="stack">
+              <div class="input-row"><span>Caso seleccionado</span><strong data-selected-case>Sin seleccionar</strong></div>
+              <div class="input-row"><span>Movil seleccionado</span><strong data-selected-mobile>Sin seleccionar</strong></div>
+              <div class="input-row"><span>ETA estimada</span><strong data-selected-eta>--</strong></div>
+            </div>
+            <div class="stack">
+              <button class="button primary" type="button" data-assign-case>Iniciar proceso de asignacion</button>
+              <button class="button" type="button" data-open-modal="modal-operador-step">Abrir flujo guiado</button>
+              <div class="alert-box" data-assign-feedback>Selecciona un caso y un movil para simular la asignacion.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="operador-incidentes">
+      <span class="section-label">Bandeja operativa</span>
+      <div class="variant-grid">
+        <div class="screen-panel compact">
+          <div class="panel-title">Tabla de incidentes</div>
+          <div class="filter-row tight">
+            <div class="mini-filter">Categoria</div>
+            <div class="mini-filter">Zona</div>
+            <div class="mini-filter">Ambulancia asignada</div>
+            <div class="mini-filter">Estado</div>
+            <div class="mini-filter">Orden fecha/hora</div>
+          </div>
+          <div class="table-compact">
+            <div class="table-head"><span>Incidente</span><span>Zona</span><span>Ambulancia</span><span>Estado</span><span>Hora</span></div>
+            <div class="table-row-compact"><strong>Emergencia critica</strong><span>Zona Norte</span><span>A-14</span><span class="status warn">Pendiente</span><span>09:42</span></div>
+            <div class="table-row-compact"><strong>Traslado programado</strong><span>Zona Centro</span><span>B-03</span><span class="status">Asignado</span><span>10:15</span></div>
+            <div class="table-row-compact"><strong>Emergencia menor</strong><span>Zona Sur</span><span>C-11</span><span class="status ok">En camino</span><span>10:28</span></div>
+          </div>
+        </div>
+        <div class="modal-sheet">
+          <div class="modal-head">
+            <div>
+              <strong>Detalle del caso</strong>
+              <span class="subtle">Modal de contexto para asignar sin perder la vista de la tabla.</span>
+            </div>
+            <div class="modal-close">×</div>
+          </div>
+          <div class="stack">
+            <div class="dispatch-card highlight">
+              <span class="tag warn">Nuevo</span>
+              <strong>Requiere asignacion inmediata</strong>
+              <p>Se prioriza el caso segun categoria, zona y disponibilidad del turno.</p>
+            </div>
+            <div class="accordion-grid">
+              <details class="collapse" open>
+                <summary>Datos del paciente</summary>
+                <div class="collapse-body">
+                  <div class="input-row"><span>Maria Perez</span><span>OSDE</span></div>
+                  <div class="input-row"><span>DNI 34988721</span><span>Av. Corrientes 412</span></div>
+                </div>
+              </details>
+              <details class="collapse">
+                <summary>Notas del operador</summary>
+                <div class="collapse-body">
+                  <div class="input-row"><span>Traslado con ida y vuelta</span><span>Validar</span></div>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="operador-mapa">
+      <span class="section-label">Cobertura en tiempo real</span>
+      <div class="variant-grid">
+        <div class="screen-panel panel-large compact">
+          <div class="panel-title">Mapa y cobertura</div>
+          <div class="map-canvas compact">
+            <div class="map-grid"></div>
+            <div class="map-pin p1"></div>
+            <div class="map-pin p2"></div>
+            <div class="map-pin p3"></div>
+            <div class="map-route"></div>
+            <div class="map-caption tight">Mapa reducido para que se vea la cobertura y el recorrido sin ocupar toda la pantalla.</div>
+          </div>
+        </div>
+        <div class="screen-panel compact">
+          <div class="panel-title">Móviles sugeridos</div>
+          <div class="input-row subtle"><span>Se muestran primero los activos en el horario actual</span><span>Turno vigente</span></div>
+          <div class="table-compact">
+            <div class="table-head"><span>Móvil</span><span>ETA</span><span>Zona</span><span>Estado</span><span>Acción</span></div>
+            <div class="table-row-compact"><strong>A-14</strong><span>8 min</span><span>Centro</span><span class="status ok">Activo</span><span class="badge-soft ok">Asignar</span></div>
+            <div class="table-row-compact"><strong>B-03</strong><span>11 min</span><span>Norte</span><span class="status">Turno</span><span class="badge-soft">Ver</span></div>
+            <div class="table-row-compact"><strong>C-11</strong><span>--</span><span>Sur</span><span class="status warn">Fuera</span><span class="badge-soft warn">Oculto</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="operador-asignacion">
+      <span class="section-label">Gestion de despacho</span>
+      <div class="variant-grid">
+        <div class="screen-panel compact">
+          <div class="panel-title">Asignacion rapida</div>
+          <div class="stack">
+            <div class="dispatch-card highlight">
+              <span class="tag ok">Recomendada</span>
+              <strong>Ambulancia A-14</strong>
+              <p>Menor ETA para el caso actual con cobertura activa.</p>
+            </div>
+            <div class="table-compact">
+              <div class="table-head"><span>Móvil</span><span>ETA</span><span>Acción</span><span></span><span></span></div>
+              <div class="table-row-compact"><strong>A-14</strong><span>8 min</span><span class="badge-soft ok">Asignar</span><span></span><span></span></div>
+              <div class="table-row-compact"><strong>B-03</strong><span>11 min</span><span class="badge-soft">Comparar</span><span></span><span></span></div>
+              <div class="table-row-compact"><strong>D-08</strong><span>15 min</span><span class="badge-soft warn">No visible</span><span></span><span></span></div>
+            </div>
+            <div class="alert-box">Los móviles fuera de turno quedan ocultos para evitar asignaciones inválidas.</div>
+          </div>
+        </div>
+        <div class="modal-sheet">
+          <div class="panel-title">Controles operativos</div>
+          <div class="stack">
+            <div class="field"><label>Ida y vuelta</label><div class="input-row"><span>Requerido para traslado</span><span>Si / No</span></div></div>
+            <div class="field"><label>Estado de pedido</label><div class="input-row"><span>Pendiente / Asignado / En camino</span><span>Actualizar</span></div></div>
+            <details class="collapse" open>
+              <summary>Tabla de estados</summary>
+              <div class="collapse-body">
+                <div class="table-compact">
+                  <div class="table-row-compact"><strong>Pendiente</strong><span>24</span><span class="status warn">Alta prioridad</span><span></span><span></span></div>
+                  <div class="table-row-compact"><strong>Asignado</strong><span>51</span><span class="status">Normal</span><span></span><span></span></div>
+                  <div class="table-row-compact"><strong>En camino</strong><span>49</span><span class="status ok">En curso</span><span></span><span></span></div>
+                </div>
+              </div>
+            </details>
+            <div class="action-row"><div class="button primary">Asignar ahora</div><div class="button">Ver detalle</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="operador-ux">
+      <span class="section-label">Automatizaciones y reglas</span>
+      <div class="ux-toolbar">
+        <div class="adjustable-filters">
+          <div class="panel-title">Filtros ajustables de despacho</div>
+          <div class="filter-row tight">
+            <div class="mini-filter">Categoria</div>
+            <div class="mini-filter">Zona</div>
+            <div class="mini-filter">Ambulancia</div>
+            <div class="mini-filter">Estado</div>
+          </div>
+          <div class="range-row" style="margin-top:8px;">
+            <div class="fake-select">Orden: fecha asc</div>
+            <div class="fake-select">Turno: actual</div>
+            <div class="fake-select">ETA max: 20 min</div>
+          </div>
+        </div>
+
+        <details class="collapse" open>
+          <summary>Tabla colapsable de disponibilidad por turno</summary>
+          <div class="collapse-body">
+            <div class="table-compact">
+              <div class="table-head"><span>Movil</span><span>Turno</span><span>Zona</span><span>ETA</span><span>Estado</span></div>
+              <div class="table-row-compact"><strong>A-14</strong><span>Activo</span><span>Centro</span><span>8 min</span><span class="status ok">Visible</span></div>
+              <div class="table-row-compact"><strong>B-03</strong><span>Activo</span><span>Norte</span><span>11 min</span><span class="status ok">Visible</span></div>
+              <div class="table-row-compact"><strong>C-11</strong><span>Fuera</span><span>Sur</span><span>--</span><span class="status warn">Oculto</span></div>
+            </div>
+          </div>
+        </details>
+
+        <div class="action-row">
+          <button class="button primary" type="button" data-open-modal="modal-operador-step">Asignar caso por pasos</button>
+          <button class="button" type="button" data-open-modal="modal-operador-filtros">Ajustar filtros</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="modal-operador-step" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-operador-step-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-operador-step-title">Asignacion asistida por pasos</strong>
+          <span class="subtle">Flujo guiado para elegir el mejor movil.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="wizard-steps">
+        <span class="wizard-step active" data-step-indicator="1">1 Caso</span>
+        <span class="wizard-step" data-step-indicator="2">2 Candidatos</span>
+        <span class="wizard-step" data-step-indicator="3">3 Traslado</span>
+        <span class="wizard-step" data-step-indicator="4">4 Confirmar</span>
+      </div>
+      <form data-wizard data-total-steps="4" data-current-step="1">
+        <section class="step-panel active" data-step-panel="1">
+          <div class="panel-title">Seleccion del incidente</div>
+          <div class="field"><label>Incidente</label><div class="input-row"><span data-modal-case>Sin caso seleccionado</span><span data-modal-case-time>--:--</span></div></div>
+          <div class="field"><label>Estado actual</label><div class="input-row"><span>Pendiente</span><span>Alta prioridad</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="2">
+          <div class="panel-title">Comparador de ambulancias</div>
+          <div class="map-canvas compact" style="margin-bottom:10px;">
+            <div class="map-grid"></div>
+            <div class="map-pin p1"></div>
+            <div class="map-pin p2"></div>
+            <div class="map-pin p3"></div>
+            <div class="map-route"></div>
+            <div class="map-caption tight">Mapa de candidatos: A-14, B-03 y C-11 para comparar cobertura y ETA.</div>
+          </div>
+          <details class="collapse" open>
+            <summary>Tabla colapsable ETA por movil</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-head"><span>Movil</span><span>ETA</span><span>Zona</span><span>Turno</span><span>Accion</span></div>
+                <div class="table-row-compact"><strong data-modal-mobile>A-14</strong><span data-modal-eta>8 min</span><span data-modal-mobile-zone>Centro</span><span>Activo</span><span class="badge-soft ok">Sugerido</span></div>
+                <div class="table-row-compact"><strong>B-03</strong><span>11 min</span><span>Norte</span><span>Activo</span><span class="badge-soft">Alternativa</span></div>
+              </div>
+            </div>
+          </details>
+        </section>
+        <section class="step-panel" data-step-panel="3">
+          <div class="panel-title">Traslado (opcional)</div>
+          <div class="action-row">
+            <button class="button is-active" type="button" data-transfer-option="no">No requiere traslado</button>
+            <button class="button" type="button" data-transfer-option="yes">Requiere traslado</button>
+          </div>
+          <div class="field"><label>Estado</label><div class="input-row"><span data-transfer-status>Sin traslado</span><span>Opcional</span></div></div>
+          <div class="field"><label>Detalle</label><div class="input-row"><span data-transfer-note>No aplica hospital destino ni ida y vuelta.</span><span>Editable</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="4">
+          <div class="panel-title">Confirmar asignacion</div>
+          <div class="alert-box"><strong data-modal-summary>Movil recomendado</strong><p>Activo en turno, menor ETA y cobertura correcta para la zona del incidente.</p></div>
+          <div class="input-row"><span>Traslado</span><span data-modal-final-transfer>No</span></div>
+          <div class="input-row"><span>Estado final</span><span data-modal-final-state>Listo para asignar</span></div>
+        </section>
+        <div class="modal-footer">
+          <button class="button" type="button" data-step-prev>Anterior</button>
+          <button class="button primary" type="button" data-step-next>Siguiente</button>
+          <button class="button primary" type="button" data-submit-wizard data-confirm-assignment hidden>Confirmar asignacion</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-operador-filtros" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-operador-filtros-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-operador-filtros-title">Filtros avanzados de operador</strong>
+          <span class="subtle">Ajusta ordenamiento y disponibilidad en segundos.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="range-row">
+        <div class="fake-select">Estado: pendientes</div>
+        <div class="fake-select">Zona: norte y centro</div>
+        <div class="fake-select">Orden: hora de ingreso</div>
+      </div>
+      <details class="collapse" open style="margin-top:10px;">
+        <summary>Tabla colapsable de incidentes filtrados</summary>
+        <div class="collapse-body">
+          <div class="table-compact">
+            <div class="table-head"><span>Incidente</span><span>Zona</span><span>Movil</span><span>Hora</span><span>Estado</span></div>
+            <div class="table-row-compact"><strong>Emergencia critica</strong><span>Norte</span><span>A-14</span><span>09:42</span><span class="status ok">Asignable</span></div>
+            <div class="table-row-compact"><strong>Traslado</strong><span>Centro</span><span>B-03</span><span>10:15</span><span class="status">Pendiente</span></div>
+          </div>
+        </div>
+      </details>
+      <div class="modal-footer">
+        <button class="button" type="button" data-close-modal>Cerrar</button>
+        <button class="button primary" type="button" data-close-modal>Aplicar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+</body>
+</html>

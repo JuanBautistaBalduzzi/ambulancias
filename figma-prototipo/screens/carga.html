@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carga de Servicio | Sistema de Ambulancias</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="screen-page">
+    <header class="toolbar">
+      <div class="brand">
+        <div class="badge">01</div>
+        <div>
+          <h1>Carga de servicio</h1>
+          <p>Paciente, sintomas, tipo de servicio, traslado programado y guardia.</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="../index.html">Board</a>
+        <a href="operador.html">Operador</a>
+        <a href="metricas.html">Metricas</a>
+        <a href="facturacion.html">Facturacion</a>
+      </nav>
+    </header>
+
+    <nav class="screen-subnav" aria-label="Navegacion interna de carga">
+      <a href="#carga-paciente" class="active">Paciente</a>
+      <a href="#carga-triage">Triage</a>
+      <a href="#carga-traslado">Traslado</a>
+      <a href="#carga-ux">Reglas</a>
+    </nav>
+
+    <section class="page-hero">
+      <div class="artboard">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Operacion diaria</span>
+            <h2>Alta de emergencia o traslado</h2>
+            <p>El flujo empieza con la busqueda del paciente por nombre, apellido o DNI y luego continua con sintomas, categoria sugerida y destino si es traslado.</p>
+          </div>
+          <div class="frame-chip">Nuevo caso</div>
+        </div>
+        <div class="mini-flow">
+          <div class="flow-node">Buscar paciente</div>
+          <div class="flow-node">Cargar sintomas</div>
+          <div class="flow-node">Sugerir categoria</div>
+          <div class="flow-node">Enviar a despacho</div>
+        </div>
+      </div>
+      <div class="page-links">
+        <a href="../index.html#screen-gallery">Volver al board</a>
+        <a href="operador.html">Ir al operador</a>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="carga-tabs">
+      <span class="section-label">Centro de ingreso</span>
+      <div class="module-tabs" data-tab-group="carga-main">
+        <div class="tab-navbar" role="tablist" aria-label="Vistas de carga">
+          <button class="tab-btn active" type="button" data-tab-target="paciente">Paciente</button>
+          <button class="tab-btn" type="button" data-tab-target="triage">Triage</button>
+          <button class="tab-btn" type="button" data-tab-target="guardia">Guardia</button>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel" data-tab-panel="paciente">
+            <div class="screen-panel compact">
+              <div class="panel-title">Busqueda y autocompletado</div>
+              <div class="input-row"><span>Nombre, apellido o DNI</span><span>Autocomplete</span></div>
+              <div class="patient-card"><div><strong>Maria Perez</strong><span>DNI 34988721 · OSDE</span></div><div class="ok-pill">Coincidencia</div></div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="triage" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Sintomas y categoria</div>
+              <div class="chip-grid"><span class="chip active">Dolor de pecho</span><span class="chip active">Disnea</span><span class="chip">Fiebre</span></div>
+              <div class="suggestion-card"><span class="tag warn">Sugerido</span><strong>Emergencia critica</strong><p>Puede editarse con motivo.</p></div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="guardia" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Guardia y turnos</div>
+              <div class="upload-box"><div class="upload-icon">⬆</div><div><strong>Subir Excel</strong><p>Disponibilidad por horario.</p></div></div>
+              <div class="table-mini"><div><span>A-14</span><strong>Centro</strong></div><div><span>B-03</span><strong>Norte</strong></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="carga-paciente">
+      <span class="section-label">Datos del paciente</span>
+      <div class="variant-grid">
+        <div class="screen-panel">
+          <div class="panel-title">Autocompletado de paciente</div>
+          <div class="stack">
+            <div class="input-row"><span>Buscar por nombre, apellido o DNI</span><span>Autocomplete</span></div>
+            <div class="patient-card">
+              <div>
+                <strong>Maria Perez</strong>
+                <span>DNI 34988721 · OSDE · Av. Corrientes 412</span>
+              </div>
+              <div class="ok-pill">Coincidencia</div>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label>Nombre</label><div class="input-row"><span>Maria</span><span>Edit.</span></div></div>
+              <div class="field"><label>Apellido</label><div class="input-row"><span>Perez</span><span>Edit.</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-panel">
+          <div class="panel-title">Datos obligatorios</div>
+          <div class="stack">
+            <div class="field"><label>DNI</label><div class="input-row"><span>34988721</span><span>Validado</span></div></div>
+            <div class="field"><label>Obra social</label><div class="input-row"><span>OSDE</span><span>Autocompletada</span></div></div>
+            <div class="field"><label>Direccion</label><div class="input-row"><span>Av. Corrientes 412</span><span>Mapa</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="carga-triage">
+      <span class="section-label">Clasificacion inicial</span>
+      <div class="variant-grid">
+        <div class="screen-panel">
+          <div class="panel-title">Sintomas y categorizacion</div>
+          <div class="chip-grid">
+            <span class="chip active">Dolor de pecho</span>
+            <span class="chip active">Disnea</span>
+            <span class="chip">Fiebre</span>
+            <span class="chip">Trauma</span>
+            <span class="chip">Desmayo</span>
+            <span class="chip">Hemorragia</span>
+          </div>
+          <div style="height: 12px"></div>
+          <div class="suggestion-card">
+            <span class="tag warn">Sugerido</span>
+            <strong>Emergencia critica</strong>
+            <p>La descripcion puede cambiar la categorizacion con justificacion operativa.</p>
+          </div>
+        </div>
+        <div class="screen-panel">
+          <div class="panel-title">Cambio de categoria</div>
+          <div class="stack">
+            <div class="input-row subtle"><span>Motivo: paciente estable, dolor leve</span><span>Editar</span></div>
+            <div class="input-row"><span>Descripcion libre del incidente</span><span>Guardar nota</span></div>
+            <div class="alert-box">La categoria final alimenta la asignacion y las metricas posteriores.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="carga-traslado">
+      <span class="section-label">Traslado y guardia</span>
+      <div class="variant-grid">
+        <div class="screen-panel">
+          <div class="panel-title">Traslado programado</div>
+          <div class="stack">
+            <div class="mode-toggle">
+              <div class="mode">Emergencia</div>
+              <div class="mode active">Traslado</div>
+            </div>
+            <div class="field"><label>Destino hospitalario</label><div class="input-row"><span>Hospital San Juan</span><span>Requerido</span></div></div>
+            <div class="field"><label>Fecha / hora</label><div class="input-row"><span>20/07/2026 · 18:30</span><span>Agendado</span></div></div>
+          </div>
+        </div>
+        <div class="screen-panel">
+          <div class="panel-title">Guardia y disponibilidad</div>
+          <div class="upload-box">
+            <div class="upload-icon">⬆</div>
+            <div>
+              <strong>Subir Excel de guardia</strong>
+              <p>Turnos, zonas y ambulancias activas por horario.</p>
+            </div>
+          </div>
+          <div class="table-mini">
+            <div><span>A-14</span><strong>Centro</strong></div>
+            <div><span>B-03</span><strong>Norte</strong></div>
+            <div><span>C-11</span><strong>Sur</strong></div>
+            <div><span>D-08</span><strong>Guardia nocturna</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard" id="carga-ux">
+      <span class="section-label">Reglas y validaciones</span>
+      <div class="ux-toolbar">
+        <div class="adjustable-filters">
+          <div class="panel-title">Filtros ajustables</div>
+          <div class="filter-row tight">
+            <div class="mini-filter">Tipo de servicio</div>
+            <div class="mini-filter">Obra social</div>
+            <div class="mini-filter">Zona</div>
+            <div class="mini-filter">Estado de carga</div>
+          </div>
+          <div class="range-row" style="margin-top:8px;">
+            <div class="fake-select">Desde 29/07/2026</div>
+            <div class="fake-select">Hasta 29/07/2026</div>
+            <div class="fake-select">Prioridad automatica</div>
+          </div>
+        </div>
+
+        <details class="collapse" open>
+          <summary>Tabla colapsable de validaciones de carga</summary>
+          <div class="collapse-body">
+            <div class="table-compact">
+              <div class="table-head"><span>Regla</span><span>Campo</span><span>Resultado</span><span>Hora</span><span>Estado</span></div>
+              <div class="table-row-compact"><strong>Paciente existente</strong><span>DNI</span><span>Coincidente</span><span>10:04</span><span class="status ok">OK</span></div>
+              <div class="table-row-compact"><strong>Direccion valida</strong><span>Calle y numero</span><span>Geocodificada</span><span>10:05</span><span class="status ok">OK</span></div>
+              <div class="table-row-compact"><strong>Hospital destino</strong><span>Traslado</span><span>Faltante</span><span>10:06</span><span class="status warn">Revisar</span></div>
+            </div>
+          </div>
+        </details>
+
+        <div class="action-row">
+          <button class="button primary" type="button" data-open-modal="modal-carga-step">Formulario por pasos</button>
+          <button class="button" type="button" data-open-modal="modal-carga-filtros">Ajustar filtros</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="modal-carga-step" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-carga-step-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-carga-step-title">Alta de servicio por pasos</strong>
+          <span class="subtle">Wizard para cargar sin errores y con seguimiento.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="wizard-steps">
+        <span class="wizard-step active" data-step-indicator="1">1 Paciente</span>
+        <span class="wizard-step" data-step-indicator="2">2 Triage</span>
+        <span class="wizard-step" data-step-indicator="3">3 Traslado</span>
+        <span class="wizard-step" data-step-indicator="4">4 Confirmacion</span>
+      </div>
+      <form data-wizard data-total-steps="4" data-current-step="1">
+        <section class="step-panel active" data-step-panel="1">
+          <div class="panel-title">Datos del paciente</div>
+          <div class="field"><label>Busqueda</label><div class="input-row"><span>Nombre, apellido o DNI</span><span>Autocomplete</span></div></div>
+          <div class="field"><label>Nombre y apellido</label><div class="input-row"><span>Maria Perez</span><span>Edit.</span></div></div>
+          <div class="field"><label>Obra social</label><div class="input-row"><span>OSDE</span><span>Autocompletada</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="2">
+          <div class="panel-title">Triage y categoria</div>
+          <div class="chip-grid">
+            <span class="chip active">Dolor de pecho</span>
+            <span class="chip active">Disnea</span>
+            <span class="chip">Fiebre</span>
+            <span class="chip">Trauma</span>
+          </div>
+          <div class="field"><label>Categoria sugerida</label><div class="input-row"><span>Emergencia critica</span><span>Cambiar</span></div></div>
+          <div class="field"><label>Motivo de cambio</label><div class="input-row"><span>Descripcion obligatoria</span><span>Completar</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="3">
+          <div class="panel-title">Datos de traslado</div>
+          <div class="field"><label>Tipo</label><div class="input-row"><span>Traslado programado</span><span>Selector</span></div></div>
+          <div class="field"><label>Hospital destino</label><div class="input-row"><span>Hospital San Juan</span><span>Requerido</span></div></div>
+          <div class="field"><label>Ida y vuelta</label><div class="input-row"><span>Si</span><span>Opcional</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="4">
+          <div class="panel-title">Confirmacion</div>
+          <div class="alert-box"><strong>Checklist final</strong><p>Paciente validado, sintomas cargados, categoria confirmada y destino completo.</p></div>
+          <details class="collapse" open>
+            <summary>Ver resumen colapsable</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-row-compact"><strong>Paciente</strong><span>Maria Perez</span><span>DNI 34988721</span><span></span><span class="status ok">OK</span></div>
+                <div class="table-row-compact"><strong>Categoria</strong><span>Emergencia critica</span><span>Sin cambios</span><span></span><span class="status ok">OK</span></div>
+                <div class="table-row-compact"><strong>Destino</strong><span>Hospital San Juan</span><span>18:30</span><span></span><span class="status">Listo</span></div>
+              </div>
+            </div>
+          </details>
+        </section>
+        <div class="modal-footer">
+          <button class="button" type="button" data-step-prev>Anterior</button>
+          <button class="button primary" type="button" data-step-next>Siguiente</button>
+          <button class="button primary" type="submit" data-submit-wizard hidden>Guardar y enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-carga-filtros" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-carga-filtros-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-carga-filtros-title">Filtros avanzados de carga</strong>
+          <span class="subtle">Ajuste fino para el panel de ingresos.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="range-row">
+        <div class="fake-select">Rango: hoy</div>
+        <div class="fake-select">Zona: todas</div>
+        <div class="fake-select">Con recategorizacion</div>
+      </div>
+      <details class="collapse" open style="margin-top:10px;">
+        <summary>Tabla colapsable de ultima actividad</summary>
+        <div class="collapse-body">
+          <div class="table-compact">
+            <div class="table-head"><span>Paciente</span><span>Categoria</span><span>Turno</span><span>Hora</span><span>Estado</span></div>
+            <div class="table-row-compact"><strong>Maria Perez</strong><span>Critica</span><span>Manana</span><span>10:10</span><span class="status ok">Cargado</span></div>
+            <div class="table-row-compact"><strong>Ruben Diaz</strong><span>Traslado</span><span>Tarde</span><span>10:22</span><span class="status">Pendiente</span></div>
+          </div>
+        </div>
+      </details>
+      <div class="modal-footer">
+        <button class="button" type="button" data-close-modal>Cerrar</button>
+        <button class="button primary" type="button" data-close-modal>Aplicar filtros</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+</body>
+</html>

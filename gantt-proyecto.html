@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline del Proyecto - Sistema Ambulancias</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0f1727;
+        --bg-2: #17243c;
+        --surface: #1f3050;
+        --line: #2f466f;
+        --text: #f2f7ff;
+        --muted: #b9c6de;
+        --front: #3ec9a7;
+        --back: #5cb4ff;
+        --deliver: #ffb85e;
+        --risk: #ff7b7b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 12% 8%, rgba(62, 201, 167, 0.18), transparent 24%),
+          radial-gradient(circle at 90% 14%, rgba(92, 180, 255, 0.18), transparent 22%),
+          linear-gradient(160deg, var(--bg) 0%, #0b111e 55%, #121f35 100%);
+        min-height: 100vh;
+        padding: 32px 20px;
+      }
+
+      .board {
+        width: min(1220px, 100%);
+        margin: 0 auto;
+        background: linear-gradient(180deg, rgba(31, 48, 80, 0.8), rgba(18, 29, 49, 0.92));
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+      }
+
+      .header {
+        padding: 28px;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        gap: 12px;
+      }
+
+      .eyebrow {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(24px, 3vw, 36px);
+        letter-spacing: -0.02em;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+        max-width: 78ch;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 6px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .dot.front { background: var(--front); }
+      .dot.back { background: var(--back); }
+      .dot.deliver { background: var(--deliver); }
+      .dot.risk { background: var(--risk); }
+
+      .timeline {
+        padding: 18px;
+      }
+
+      .weeks {
+        display: grid;
+        grid-template-columns: 270px repeat(14, minmax(40px, 1fr));
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      .weeks > div {
+        padding: 10px 8px;
+        border-right: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .weeks > div:first-child {
+        text-align: left;
+        padding-left: 14px;
+      }
+
+      .row {
+        margin-top: 8px;
+        display: grid;
+        grid-template-columns: 270px repeat(14, minmax(40px, 1fr));
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+        background: rgba(11, 18, 31, 0.45);
+      }
+
+      .module {
+        padding: 12px 14px;
+        border-right: 1px solid var(--line);
+        display: grid;
+        gap: 4px;
+      }
+
+      .module strong {
+        font-size: 14px;
+      }
+
+      .module span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .slot {
+        height: 52px;
+        border-right: 1px solid rgba(47, 70, 111, 0.45);
+        position: relative;
+      }
+
+      .bar {
+        position: absolute;
+        inset: 9px 4px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 11px;
+        font-weight: 600;
+        color: #08111e;
+      }
+
+      .bar.front { background: linear-gradient(90deg, #37d7b1, #76ffd8); }
+      .bar.back { background: linear-gradient(90deg, #63beff, #96dcff); }
+      .bar.deliver { background: linear-gradient(90deg, #ffbf68, #ffe29c); }
+      .bar.risk { background: linear-gradient(90deg, #ff8484, #ffb2b2); }
+
+      .milestones {
+        padding: 22px 18px 26px;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 12px;
+      }
+
+      .milestones h2 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .deliverables {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(180px, 1fr));
+        gap: 10px;
+      }
+
+      .deliverable {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .deliverable strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .deliverable span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .commercial {
+        padding: 22px 18px 28px;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 12px;
+      }
+
+      .commercial h2 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 10px;
+      }
+
+      .price-card {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        display: grid;
+        gap: 6px;
+      }
+
+      .price-card strong {
+        font-size: 14px;
+      }
+
+      .price-card .amount {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 17px;
+        color: #fff1bf;
+      }
+
+      .price-card span,
+      .price-card li {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .price-card ul {
+        margin: 2px 0 0;
+        padding-left: 18px;
+      }
+
+      @media (max-width: 980px) {
+        .timeline {
+          overflow-x: auto;
+        }
+
+        .weeks,
+        .row {
+          min-width: 980px;
+        }
+
+        .deliverables {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .pricing-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 16px 10px;
+        }
+
+        .header,
+        .timeline,
+        .milestones,
+        .commercial {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        .deliverables {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="board">
+      <section class="header">
+        <div class="eyebrow">Roadmap ejecutivo</div>
+        <h1>Sistema de Ambulancias - Timeline de Desarrollo</h1>
+        <p class="subtitle">
+          Vista tipo Gantt de 14 semanas con modulos de Frontend y Backend, app mobile,
+          integracion AFIP y entregables parciales para presentar al cliente.
+        </p>
+        <div class="legend">
+          <span class="chip"><span class="dot front"></span>Frontend</span>
+          <span class="chip"><span class="dot back"></span>Backend</span>
+          <span class="chip"><span class="dot deliver"></span>Entregable</span>
+          <span class="chip"><span class="dot risk"></span>Buffer / riesgos</span>
+        </div>
+      </section>
+
+      <section class="timeline">
+        <div class="weeks">
+          <div>Modulo / Semana</div>
+          <div>S1</div><div>S2</div><div>S3</div><div>S4</div><div>S5</div><div>S6</div><div>S7</div>
+          <div>S8</div><div>S9</div><div>S10</div><div>S11</div><div>S12</div><div>S13</div><div>S14</div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>FE-01 Base UI + Ruteo</strong><span>Design system, layouts, dark mode</span></div>
+          <div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>FE-02 Carga de casos</strong><span>Wizard, validaciones, estado local</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>FE-03 Operador + mapa</strong><span>Tabla incidentes, sidebar flota, asignacion</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>FE-04 Metricas + Facturacion</strong><span>KPIs, historicos, catalogo</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"><div class="bar front">FE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>BE-01 Arquitectura API</strong><span>DB schema, auth, base endpoints</span></div>
+          <div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>BE-02 Casos y pacientes</strong><span>CRUD, reglas negocio, trazabilidad</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>BE-03 Despacho y asignacion</strong><span>motor sugerencias, estados movil</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>BE-04 Facturacion y reportes</strong><span>liquidaciones, exportaciones, corte mensual</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"><div class="bar back">BE</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>FE-05 App Mobile</strong><span>React Native, login, casos, estado ambulancias</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar front">MOB</div></div><div class="slot"><div class="bar front">MOB</div></div><div class="slot"><div class="bar front">MOB</div></div><div class="slot"><div class="bar front">MOB</div></div><div class="slot"><div class="bar front">MOB</div></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>BE-05 Integracion AFIP</strong><span>Facturacion electronica, CAE, reintentos y auditoria</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar back">AFIP</div></div><div class="slot"><div class="bar back">AFIP</div></div><div class="slot"><div class="bar back">AFIP</div></div><div class="slot"><div class="bar back">AFIP</div></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>QA + Integracion + UAT</strong><span>pruebas E2E, hardening, validacion cliente</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar deliver">INT</div></div><div class="slot"><div class="bar deliver">QA</div></div><div class="slot"><div class="bar deliver">UAT</div></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+        </div>
+
+        <div class="row">
+          <div class="module"><strong>Deploy + soporte salida</strong><span>produccion, monitoreo, buffer</span></div>
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"><div class="bar back">OPS</div></div><div class="slot"><div class="bar risk">Buffer</div></div><div class="slot"><div class="bar risk">Buffer</div></div><div class="slot"><div class="bar deliver">Go Live</div></div><div class="slot"><div class="bar deliver">Handover</div></div>
+        </div>
+      </section>
+
+      <section class="milestones">
+        <h2>Entregables por hito</h2>
+        <div class="deliverables">
+          <article class="deliverable">
+            <strong>Hito 1 (fin S3)</strong>
+            <span>Base FE + base API + demo navegable.</span>
+          </article>
+          <article class="deliverable">
+            <strong>Hito 2 (fin S6)</strong>
+            <span>Carga completa + gestion de casos + primer despacho.</span>
+          </article>
+          <article class="deliverable">
+            <strong>Hito 3 (fin S9)</strong>
+            <span>Operador con mapa + metricas + inicio de app mobile y AFIP.</span>
+          </article>
+          <article class="deliverable">
+            <strong>Hito 4 (fin S14)</strong>
+            <span>Sistema integrado web + mobile + AFIP, QA/UAT, deploy y transferencia.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="commercial">
+        <h2>Propuesta economica sugerida</h2>
+        <div class="pricing-grid">
+          <article class="price-card">
+            <strong>Inicio de negociacion</strong>
+            <div class="amount">USD 9.500 - 11.000</div>
+            <span>Para tener margen de cierre incluyendo mobile + AFIP.</span>
+          </article>
+          <article class="price-card">
+            <strong>Objetivo de cierre</strong>
+            <div class="amount">USD 8.500 - 9.500</div>
+            <span>Rango saludable por alcance completo y riesgos tecnicos.</span>
+          </article>
+          <article class="price-card">
+            <strong>Piso minimo recomendado</strong>
+            <div class="amount">USD 8.000</div>
+            <span>No bajar de este valor sin recortar alcance o soporte.</span>
+          </article>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card">
+            <strong>Esquema de cobro por hitos</strong>
+            <ul>
+              <li>30% anticipo (inicio)</li>
+              <li>25% entrega Hito 1</li>
+              <li>25% entrega Hito 3</li>
+              <li>20% go-live + handover</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <strong>Incluye</strong>
+            <ul>
+              <li>App web + backend productivo</li>
+              <li>App mobile operativa</li>
+              <li>Integracion AFIP para facturacion</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <strong>Excluir o cotizar aparte</strong>
+            <ul>
+              <li>Soporte extendido mensual</li>
+              <li>Integraciones externas nuevas</li>
+              <li>Reportes custom extra-complejos</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

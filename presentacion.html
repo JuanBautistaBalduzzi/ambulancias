@@ -3,680 +3,1074 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Asignación Inteligente de Ambulancias</title>
+    <title>Figma de Operacion | Sistema de Ambulancias</title>
     <style>
+        :root {
+            --bg: #f4efe6;
+            --panel: #fffaf2;
+            --panel-2: #f8f1e6;
+            --line: #d9ccb9;
+            --line-strong: #bda98e;
+            --text: #1e1a17;
+            --muted: #675e55;
+            --muted-2: #8a7f73;
+            --brand: #0b7a75;
+            --brand-2: #f28f3b;
+            --brand-3: #355c7d;
+            --success: #1e8e5a;
+            --warning: #d98b16;
+            --danger: #c34b4b;
+            --shadow: 0 20px 50px rgba(43, 32, 21, 0.12);
+            --shadow-soft: 0 10px 24px rgba(43, 32, 21, 0.08);
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            font-family: "Avenir Next", "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(11, 122, 117, 0.08), transparent 26%),
+                radial-gradient(circle at top right, rgba(242, 143, 59, 0.10), transparent 24%),
+                linear-gradient(180deg, #f8f3ea 0%, #f1eadf 100%);
+            color: var(--text);
             min-height: 100vh;
-            padding: 20px;
         }
 
-        .container {
-            max-width: 1400px;
+        .shell {
+            max-width: 1500px;
             margin: 0 auto;
+            padding: 22px 22px 34px;
         }
 
-        /* Header */
-        header {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .empresa-logo-wrap {
-            display: inline-block;
-            margin-bottom: 22px;
-            padding: 10px 18px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.18);
-        }
-
-        .empresa-logo {
-            width: min(480px, 80vw);
-            height: auto;
-            display: block;
-            mix-blend-mode: multiply;
-        }
-
-        header h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        header .subtitle {
-            color: #666;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-
-        .tagline {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            display: inline-block;
-            font-weight: bold;
-        }
-
-        /* Flujo Principal */
-        .flujo-principal {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .flujo-principal h2 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.8em;
-        }
-
-        .flujo-steps {
+        .topbar {
+            position: sticky;
+            top: 14px;
+            z-index: 20;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1.4fr auto;
+            gap: 14px;
             align-items: center;
+            padding: 16px 18px;
+            background: rgba(255, 250, 242, 0.82);
+            border: 1px solid rgba(189, 169, 142, 0.6);
+            border-radius: 20px;
+            backdrop-filter: blur(14px);
+            box-shadow: var(--shadow-soft);
         }
 
-        .paso {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            position: relative;
-        }
-
-        .paso .numero {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .paso h3 {
-            font-size: 1.1em;
-            margin-bottom: 8px;
-        }
-
-        .paso p {
-            font-size: 0.9em;
-            opacity: 0.95;
-        }
-
-        .paso::after {
-            content: "→";
-            position: absolute;
-            right: -25px;
-            font-size: 2em;
-            color: #667eea;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .paso:last-child::after {
-            display: none;
-        }
-
-        /* Módulos */
-        .modulos-section {
-            margin-bottom: 40px;
-        }
-
-        .modulos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .modulo {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 5px solid #667eea;
-        }
-
-        .modulo:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-        }
-
-        .modulo-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .modulo h3 {
-            color: #667eea;
-            font-size: 1.4em;
-            margin-bottom: 15px;
-        }
-
-        .modulo ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .modulo ul li {
-            padding: 8px 0;
-            color: #555;
-            border-bottom: 1px solid #eee;
-        }
-
-        .modulo ul li:last-child {
-            border-bottom: none;
-        }
-
-        .modulo ul li::before {
-            content: "✓ ";
-            color: #764ba2;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        /* Diferencial IA */
-        .diferencial {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .diferencial h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .diferencial-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .diferencial-text h3 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-
-        .diferencial-text p {
-            font-size: 1.05em;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .diferencial-features {
-            list-style: none;
-        }
-
-        .diferencial-features li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-            font-size: 1em;
-        }
-
-        .diferencial-features li::before {
-            content: "🧠";
-            position: absolute;
-            left: 0;
-        }
-
-        .ia-diagram {
-            background: rgba(255,255,255,0.1);
-            padding: 25px;
-            border-radius: 10px;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .ia-flow {
+        .brand {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 4px;
         }
 
-        .ia-box {
-            background: rgba(255,255,255,0.2);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
+        .brand h1 {
+            margin: 0;
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            letter-spacing: -0.03em;
         }
 
-        .ia-box.entrada {
-            background: rgba(255,255,255,0.3);
+        .brand p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.95rem;
         }
 
-        .ia-arrow {
-            text-align: center;
-            font-size: 1.5em;
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-end;
         }
 
-        /* Arquitectura */
-        .arquitectura {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        .chip {
+            border: 1px solid var(--line);
+            background: #fffdf8;
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 9px 12px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: 0.2s ease;
         }
 
-        .arquitectura h2 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.8em;
+        .chip:hover,
+        .chip.active {
+            border-color: rgba(11, 122, 117, 0.35);
+            color: var(--brand);
+            background: rgba(11, 122, 117, 0.08);
         }
 
-        .arquitectura-grid {
+        .hero {
+            margin-top: 18px;
+            padding: 24px;
+            border-radius: 28px;
+            background:
+                linear-gradient(135deg, rgba(11, 122, 117, 0.12), rgba(242, 143, 59, 0.12)),
+                rgba(255, 250, 242, 0.76);
+            border: 1px solid rgba(189, 169, 142, 0.45);
+            box-shadow: var(--shadow);
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: 1.4fr 0.9fr;
+            gap: 18px;
+            align-items: stretch;
         }
 
-        .arch-component {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
+        .hero-copy h2 {
+            margin: 0 0 10px;
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            line-height: 0.98;
+            letter-spacing: -0.05em;
         }
 
-        .arch-component h4 {
-            font-size: 1.1em;
+        .hero-copy p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 1.02rem;
+            max-width: 70ch;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(189, 169, 142, 0.65);
+            background: rgba(255, 255, 255, 0.66);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .mini-card,
+        .frame,
+        .panel,
+        .metric,
+        .list-item,
+        .fake-input,
+        .input-group,
+        .ticket,
+        .billing-row,
+        .table-row,
+        .kpi,
+        .chart-card,
+        .timeline-item {
+            border: 1px solid rgba(189, 169, 142, 0.55);
+            background: rgba(255, 250, 242, 0.92);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .mini-card {
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .mini-card strong {
+            display: block;
+            font-size: 1.25rem;
+            margin-bottom: 5px;
+        }
+
+        .mini-card span {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .board {
+            margin-top: 18px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .frame {
+            border-radius: 28px;
+            padding: 22px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .frame::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto auto 0;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(11, 122, 117, 0.1), transparent 70%);
+            pointer-events: none;
+        }
+
+        .frame-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .frame-title {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .frame-title .eyebrow {
+            font-size: 0.84rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--brand);
+            font-weight: 700;
+        }
+
+        .frame-title h3 {
+            margin: 0;
+            font-size: clamp(1.45rem, 2.8vw, 2rem);
+            letter-spacing: -0.04em;
+        }
+
+        .frame-title p {
+            margin: 0;
+            color: var(--muted);
+            max-width: 80ch;
+        }
+
+        .frame-badge {
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(11, 122, 117, 0.1);
+            color: var(--brand);
+            border: 1px solid rgba(11, 122, 117, 0.2);
+            font-weight: 700;
+            font-size: 0.88rem;
+            white-space: nowrap;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .panel {
+            border-radius: 22px;
+            padding: 16px;
+        }
+
+        .panel h4 {
+            margin: 0 0 12px;
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .label {
+            display: block;
+            color: var(--muted-2);
+            font-size: 0.82rem;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+        }
+
+        .fake-input,
+        .input-group {
+            border-radius: 18px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+        }
+
+        .fake-input {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fake-input .hint,
+        .subtle {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .sintomas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .pill {
+            border: 1px solid rgba(189, 169, 142, 0.7);
+            background: #fffdf8;
+            color: var(--text);
+            border-radius: 999px;
+            padding: 8px 11px;
+            font-size: 0.86rem;
+        }
+
+        .pill.selected {
+            background: rgba(11, 122, 117, 0.1);
+            border-color: rgba(11, 122, 117, 0.3);
+            color: var(--brand);
+            font-weight: 700;
+        }
+
+        .category-box {
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(242, 143, 59, 0.35);
+            background: linear-gradient(180deg, rgba(242, 143, 59, 0.10), rgba(255, 250, 242, 0.92));
+        }
+
+        .category-box .suggestion {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 10px;
         }
 
-        .arch-component p {
-            font-size: 0.9em;
-            opacity: 0.9;
+        .suggestion strong {
+            font-size: 1.1rem;
         }
 
-        .responsabilidades {
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
+        .suggestion .edit {
+            color: var(--brand-2);
+            font-weight: 700;
+            font-size: 0.86rem;
         }
 
-        .responsabilidades h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-
-        .resp-item {
+        .support-row {
             display: grid;
-            grid-template-columns: 150px 1fr;
-            gap: 20px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #ddd;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 14px;
         }
 
-        .resp-item:last-child {
-            border-bottom: none;
+        .callout {
+            border-radius: 18px;
+            padding: 14px;
+            background: rgba(53, 92, 125, 0.08);
+            border: 1px solid rgba(53, 92, 125, 0.18);
         }
 
-        .resp-label {
-            font-weight: bold;
-            color: #764ba2;
+        .callout strong {
+            display: block;
+            margin-bottom: 5px;
         }
 
-        .resp-desc {
-            color: #555;
+        .callout p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.92rem;
         }
 
-        /* Beneficios */
-        .beneficios {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .beneficios h2 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.8em;
-        }
-
-        .beneficios-grid {
+        .upload-box {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 10px;
         }
 
-        .beneficio-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 25px;
-            border-radius: 10px;
+        .upload-drop {
+            border: 1.5px dashed rgba(11, 122, 117, 0.35);
+            background: rgba(11, 122, 117, 0.05);
+            border-radius: 18px;
+            padding: 18px;
+            min-height: 118px;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 0.9fr;
+            gap: 14px;
+        }
+
+        .list-stack {
+            display: grid;
+            gap: 10px;
+        }
+
+        .list-item,
+        .ticket,
+        .timeline-item,
+        .billing-row,
+        .table-row {
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .list-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--brand);
+            box-shadow: 0 0 0 6px rgba(11, 122, 117, 0.08);
+        }
+
+        .dot.orange { background: var(--brand-2); box-shadow: 0 0 0 6px rgba(242, 143, 59, 0.10); }
+        .dot.red { background: var(--danger); box-shadow: 0 0 0 6px rgba(195, 75, 75, 0.10); }
+        .dot.green { background: var(--success); box-shadow: 0 0 0 6px rgba(30, 142, 90, 0.10); }
+
+        .list-item strong,
+        .ticket strong,
+        .billing-row strong,
+        .table-row strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .badge-soft {
+            border-radius: 999px;
+            padding: 7px 10px;
+            background: rgba(53, 92, 125, 0.09);
+            color: var(--brand-3);
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-soft.warn {
+            background: rgba(217, 139, 22, 0.1);
+            color: var(--warning);
+        }
+
+        .badge-soft.ok {
+            background: rgba(30, 142, 90, 0.1);
+            color: var(--success);
+        }
+
+        .ambulance-card {
+            border-radius: 18px;
+            padding: 14px;
+            border: 1px solid rgba(189, 169, 142, 0.55);
+            background: linear-gradient(180deg, #fffef9, #fbf6ee);
+            display: grid;
+            gap: 10px;
+        }
+
+        .ambulance-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .location {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .eta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .eta {
+            border-radius: 16px;
+            padding: 12px;
+            border: 1px solid rgba(189, 169, 142, 0.55);
+            background: rgba(255, 255, 255, 0.66);
+        }
+
+        .eta strong {
+            display: block;
+            font-size: 1.05rem;
+        }
+
+        .eta span {
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .map-box {
+            min-height: 210px;
+            border-radius: 22px;
+            border: 1px solid rgba(53, 92, 125, 0.18);
+            background:
+                linear-gradient(135deg, rgba(53, 92, 125, 0.08), transparent 50%),
+                radial-gradient(circle at 20% 30%, rgba(11, 122, 117, 0.16), transparent 28%),
+                radial-gradient(circle at 75% 65%, rgba(242, 143, 59, 0.16), transparent 26%),
+                #fdf8ef;
+            position: relative;
+            overflow: hidden;
+            padding: 14px;
+        }
+
+        .map-line {
+            position: absolute;
+            inset: 20% 10% auto 12%;
+            height: 2px;
+            background: rgba(53, 92, 125, 0.35);
+            transform: rotate(18deg);
+            transform-origin: left center;
+        }
+
+        .map-dot {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: var(--brand);
+            box-shadow: 0 0 0 8px rgba(11, 122, 117, 0.11);
+        }
+
+        .map-dot.orange { background: var(--brand-2); box-shadow: 0 0 0 8px rgba(242, 143, 59, 0.11); }
+        .map-dot.red { background: var(--danger); box-shadow: 0 0 0 8px rgba(195, 75, 75, 0.11); }
+
+        .map-note {
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            right: 14px;
+            border-radius: 14px;
+            padding: 11px 12px;
+            background: rgba(255, 250, 242, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(189, 169, 142, 0.45);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .kpi {
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .kpi .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .kpi .label-text {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 14px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .chart-card {
+            border-radius: 20px;
+            padding: 16px;
+        }
+
+        .bars {
+            display: flex;
+            align-items: end;
+            gap: 10px;
+            height: 120px;
+            margin-top: 14px;
+        }
+
+        .bar {
+            flex: 1;
+            border-radius: 12px 12px 6px 6px;
+            background: linear-gradient(180deg, rgba(11, 122, 117, 0.75), rgba(11, 122, 117, 0.18));
+            min-height: 20px;
+        }
+
+        .bar.orange {
+            background: linear-gradient(180deg, rgba(242, 143, 59, 0.82), rgba(242, 143, 59, 0.16));
+        }
+
+        .bar.blue {
+            background: linear-gradient(180deg, rgba(53, 92, 125, 0.82), rgba(53, 92, 125, 0.16));
+        }
+
+        .metrics-side {
+            display: grid;
+            gap: 12px;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .timeline-item .info span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .billing-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr 0.95fr;
+            gap: 14px;
+        }
+
+        .billing-row {
+            display: grid;
+            gap: 10px;
+        }
+
+        .billing-row .line {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: var(--muted);
+        }
+
+        .billing-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-row .meta {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            margin-top: 18px;
+            padding: 16px 6px 0;
+            color: var(--muted);
+            font-size: 0.9rem;
             text-align: center;
         }
 
-        .beneficio-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .beneficio-card h4 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .beneficio-card p {
-            font-size: 0.95em;
-            line-height: 1.6;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            color: white;
-            padding: 20px;
-            font-size: 0.9em;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 20px;
-            }
-
-            .empresa-logo-wrap {
-                padding: 6px 10px;
-                margin-bottom: 12px;
-            }
-
-            .empresa-logo {
-                width: min(200px, 70vw);
-            }
-
-            header h1 {
-                font-size: 2em;
-            }
-
-            .flujo-steps {
+        @media (max-width: 1180px) {
+            .hero,
+            .section-grid,
+            .metrics-grid,
+            .billing-grid,
+            .grid-4,
+            .chart-grid,
+            .hero-stats,
+            .kpis,
+            .grid-3,
+            .grid-2,
+            .support-row {
                 grid-template-columns: 1fr;
             }
 
-            .paso::after {
-                display: none;
-            }
-
-            .diferencial-content {
+            .topbar {
                 grid-template-columns: 1fr;
             }
 
-            .arquitectura-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .chips {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .shell {
+                padding: 12px;
             }
 
-            .resp-item {
+            .frame,
+            .hero,
+            .topbar {
+                border-radius: 22px;
+            }
+
+            .frame-head {
+                flex-direction: column;
+            }
+
+            .eta-grid {
                 grid-template-columns: 1fr;
-                gap: 5px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="empresa-logo-wrap">
-                <img class="empresa-logo" src="image.png" alt="Logo de Cygnus Informática">
+    <div class="shell">
+        <header class="topbar">
+            <div class="brand">
+                <h1>Figma operativo para ambulancias</h1>
+                <p>Una maqueta de producto con 4 pantallas: carga de servicio, operador, métricas y facturación.</p>
             </div>
-            <h1>🚑 Sistema de Asignación Inteligente de Ambulancias</h1>
-            <p class="subtitle">Plataforma Integral de Gestión y Optimización de Servicios de Emergencia</p>
-            <div class="tagline">🤖 Impulsado por Inteligencia Artificial</div>
+            <nav class="chips" aria-label="Navegación de secciones">
+                <a class="chip active" href="#carga">Carga</a>
+                <a class="chip" href="#operador">Operador</a>
+                <a class="chip" href="#metricas">Metricas</a>
+                <a class="chip" href="#facturacion">Facturacion</a>
+            </nav>
         </header>
 
-        <!-- Flujo Principal -->
-        <div class="flujo-principal">
-            <h2>Flujo del Sistema</h2>
-            <div class="flujo-steps">
-                <div class="paso">
-                    <div class="numero">1</div>
-                    <h3>Llamada Recibida</h3>
-                    <p>Operario carga caso y triage</p>
-                </div>
-                <div class="paso">
-                    <div class="numero">2</div>
-                    <h3>Análisis IA</h3>
-                    <p>Modelo estima tiempo de atención</p>
-                </div>
-                <div class="paso">
-                    <div class="numero">3</div>
-                    <h3>Recomendación</h3>
-                    <p>Sugiere mejor ambulancia</p>
-                </div>
-                <div class="paso">
-                    <div class="numero">4</div>
-                    <h3>Asignación</h3>
-                    <p>Operario asigna y notifica</p>
-                </div>
-                <div class="paso">
-                    <div class="numero">5</div>
-                    <h3>Ejecución</h3>
-                    <p>Ambulanciero recibe ruta</p>
-                </div>
-                <div class="paso">
-                    <div class="numero">6</div>
-                    <h3>Seguimiento</h3>
-                    <p>Monitoreo y alertas en tiempo real</p>
+        <section class="hero">
+            <div class="hero-copy">
+                <h2>Diseño de sistema para cargar, asignar, medir y facturar servicios de ambulancia</h2>
+                <p>
+                    La propuesta organiza el flujo completo en cuatro módulos visuales. El primero captura al paciente
+                    y el tipo de servicio; el segundo ayuda al operador a despachar; el tercero expone métricas; y el
+                    cuarto prepara la facturación y liquidación con totales previos a emitir.
+                </p>
+                <div class="tag-row">
+                    <span class="tag">Autocomplete por nombre, apellido o DNI</span>
+                    <span class="tag">Triage con sintomas seleccionables</span>
+                    <span class="tag">ETA sugerida por ambulancia</span>
+                    <span class="tag">Facturacion por codigo y pagador</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Módulos Principales -->
-        <div class="modulos-section">
-            <h2 style="color: white; text-align: center; margin-bottom: 30px; font-size: 2em;">Módulos del Sistema</h2>
-            <div class="modulos-grid">
-                <div class="modulo">
-                    <div class="modulo-icon">📍</div>
-                    <h3>Centro de Control</h3>
-                    <ul>
-                        <li>Monitoreo GPS en tiempo real</li>
-                        <li>Visualización de todas las ambulancias</li>
-                        <li>Gestión de casos</li>
-                        <li>Panel de control intuitivo</li>
-                    </ul>
+            <div class="hero-stats">
+                <div class="mini-card">
+                    <strong>4 pantallas</strong>
+                    <span>Un flujo claro para tomar el caso y llevarlo hasta la liquidacion.</span>
                 </div>
-
-                <div class="modulo" style="border-left-color: #f5576c;">
-                    <div class="modulo-icon">🧠</div>
-                    <h3>Motor de Recomendación IA</h3>
-                    <ul>
-                        <li>Análisis de preguntas de triage</li>
-                        <li>Estimación de tiempo de atención</li>
-                        <li>Cálculo de horario de liberación</li>
-                        <li>Sugerencia optimizada por ambulancia</li>
-                    </ul>
+                <div class="mini-card">
+                    <strong>1 sola vista</strong>
+                    <span>Formato tipo board/Figma para revisar con negocio y operacion.</span>
                 </div>
-
-                <div class="modulo" style="border-left-color: #f093fb;">
-                    <div class="modulo-icon">📱</div>
-                    <h3>App Ambulanciero</h3>
-                    <ul>
-                        <li>Ruta más rápida automática</li>
-                        <li>Integración con Google Maps</li>
-                        <li>Checkeo de llegada</li>
-                        <li>Registro de fin de atención</li>
-                    </ul>
+                <div class="mini-card">
+                    <strong>Roles separados</strong>
+                    <span>Ingreso, despacho, seguimiento y administracion financiera.</span>
                 </div>
-
-                <div class="modulo" style="border-left-color: #667eea;">
-                    <div class="modulo-icon">📊</div>
-                    <h3>Módulo de Facturación</h3>
-                    <ul>
-                        <li>Histórico completo de asignaciones</li>
-                        <li>Cálculo de facturación por proveedor</li>
-                        <li>Generación de notas de cobro</li>
-                        <li>Reportes de desempeño</li>
-                    </ul>
+                <div class="mini-card">
+                    <strong>Editable</strong>
+                    <span>La categorizacion puede cambiar con motivo y descripcion del cambio.</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Diferencial IA -->
-        <div class="diferencial">
-            <h2>⭐ El Diferencial: Sugerencia Inteligente</h2>
-            <div class="diferencial-content">
-                <div class="diferencial-text">
-                    <h3>Cómo Funciona</h3>
-                    <p>Nuestro modelo de inteligencia artificial aprende de cada interacción para mejorar continuamente las asignaciones.</p>
-                    
-                    <ul class="diferencial-features">
-                        <li><strong>Entrenamiento Continuo:</strong> Datos del triage + tiempo real de atención</li>
-                        <li><strong>Predicción Precisa:</strong> Estimación de tiempo de atención para cada caso</li>
-                        <li><strong>Optimización Inteligente:</strong> Considera disponibilidad y tiempos de desplazamiento</li>
-                        <li><strong>Alertas Automáticas:</strong> Notificación si se excede el tiempo estimado</li>
-                        <li><strong>Aprendizaje Adaptativo:</strong> Mejora con cada caso procesado</li>
-                    </ul>
+        <main class="board">
+            <section class="frame" id="carga">
+                <div class="frame-head">
+                    <div class="frame-title">
+                        <span class="eyebrow">Pantalla 01</span>
+                        <h3>Carga de servicio y triage inicial</h3>
+                        <p>
+                            Entrada del caso de emergencia o traslado. El sistema autocompleta el paciente por nombre,
+                            apellido o DNI, y luego continúa con sintomas, categorizacion sugerida y datos del traslado
+                            programado cuando corresponda.
+                        </p>
+                    </div>
+                    <div class="frame-badge">Servicio: emergencia o traslado</div>
                 </div>
 
-                <div class="ia-diagram">
-                    <div class="ia-flow">
-                        <div class="ia-box entrada">📋 Preguntas de Triage</div>
-                        <div class="ia-arrow">⬇️</div>
-                        <div class="ia-box">🧠 Modelo IA Entrenado</div>
-                        <div class="ia-arrow">⬇️</div>
-                        <div class="ia-box">⏱️ Estimación de Tiempo</div>
-                        <div class="ia-arrow">⬇️</div>
-                        <div class="ia-box">🚑 Sugerencia Ambulancia Óptima</div>
-                        <div class="ia-arrow">⬇️</div>
-                        <div class="ia-box">✅ Asignación Confirmada</div>
+                <div class="grid-2">
+                    <div class="panel">
+                        <h4>1. Buscar paciente</h4>
+                        <span class="label">Identificacion</span>
+                        <div class="fake-input"><span>Buscar por nombre, apellido o DNI</span><span class="hint">Autocomplete</span></div>
+                        <div class="support-row">
+                            <div>
+                                <span class="label">Paciente detectado</span>
+                                <div class="fake-input"><span>Maria Perez - 34988721</span><span class="badge-soft ok">Coincidencia</span></div>
+                            </div>
+                            <div>
+                                <span class="label">Datos basicos</span>
+                                <div class="fake-input"><span>Obra social + domicilio</span><span class="hint">Editable</span></div>
+                            </div>
+                        </div>
+                        <div class="callout">
+                            <strong>Objetivo</strong>
+                            <p>Evitar reingresar datos y acelerar el alta de casos repetidos o pacientes frecuentes.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <h4>2. Sintomas y categoria</h4>
+                        <span class="label">Sintomas seleccionables</span>
+                        <div class="sintomas">
+                            <span class="pill selected">Dolor de pecho</span>
+                            <span class="pill selected">Dificultad respiratoria</span>
+                            <span class="pill">Fiebre</span>
+                            <span class="pill">Traumatismo</span>
+                            <span class="pill">Desmayo</span>
+                            <span class="pill">Hemorragia</span>
+                        </div>
+                        <div style="height: 12px"></div>
+                        <div class="category-box">
+                            <div class="suggestion">
+                                <strong>Categoria sugerida: Emergencia critica</strong>
+                                <span class="edit">Cambiar categoria</span>
+                            </div>
+                            <div class="fake-input"><span>Descripcion del cambio: paciente estable, dolor leve</span><span class="hint">Motivo</span></div>
+                            <div class="fake-input"><span>Descripcion libre del incidente</span><span class="hint">Texto clinico-operativo</span></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Arquitectura y Responsabilidades -->
-        <div class="arquitectura">
-            <h2>Arquitectura y Responsabilidades</h2>
-            
-            <div class="arquitectura-grid">
-                <div class="arch-component">
-                    <h4>📱 Frontend</h4>
-                    <p>Interfaz operario y ambulanciero</p>
-                </div>
-                <div class="arch-component">
-                    <h4>🤖 IA/ML</h4>
-                    <p>Motor de recomendación inteligente</p>
-                </div>
-                <div class="arch-component">
-                    <h4>🗺️ Geolocalización</h4>
-                    <p>Google Maps API</p>
-                </div>
-                <div class="arch-component">
-                    <h4>💾 Backend</h4>
-                    <p>Servidor y lógica de negocio</p>
-                </div>
-            </div>
+                <div style="height: 14px"></div>
 
-            <div class="responsabilidades">
-                <h3>Separación de Responsabilidades</h3>
-                
-                <div class="resp-item">
-                    <div class="resp-label">🖥️ Centro de Control</div>
-                    <div class="resp-desc">Monitoreo, recepción de casos, carga de información del triage, visualización de recomendaciones, confirmación de asignación</div>
+                <div class="grid-3">
+                    <div class="panel">
+                        <h4>3. Traslado programado</h4>
+                        <span class="label">Categoria traslado</span>
+                        <div class="fake-input"><span>Destino: Hospital San Juan</span><span class="hint">Programado</span></div>
+                        <div class="fake-input"><span>Fecha y hora del traslado</span><span class="hint">Agendado</span></div>
+                        <div class="callout">
+                            <strong>Datos clave</strong>
+                            <p>Cuando sea traslado, se exige ingresar el hospital o destino sanitario antes de continuar.</p>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <h4>4. Guardia y disponibilidad</h4>
+                        <span class="label">Carga masiva</span>
+                        <div class="upload-box">
+                            <div class="upload-drop">Arrastrar o subir Excel con ambulancias y turnos de guardia</div>
+                            <div class="fake-input"><span>Validacion de columnas y horarios</span><span class="hint">Guardia</span></div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <h4>Resumen del caso</h4>
+                        <div class="list-stack">
+                            <div class="list-item"><span class="dot green"></span><div><strong>Paciente identificado</strong><span class="subtle">Nombre, documento, obra social y direccion</span></div><span class="badge-soft ok">OK</span></div>
+                            <div class="list-item"><span class="dot orange"></span><div><strong>Sintomas y severidad</strong><span class="subtle">Categorizacion editable con motivo</span></div><span class="badge-soft warn">En revision</span></div>
+                            <div class="list-item"><span class="dot"></span><div><strong>Destino programado</strong><span class="subtle">Se activa solo si la categoria es traslado</span></div><span class="badge-soft">Condicional</span></div>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-                <div class="resp-item">
-                    <div class="resp-label">🧠 Motor IA</div>
-                    <div class="resp-desc">Análisis de datos históricos, entrenamiento del modelo, predicción de tiempos de atención, cálculo de horarios de liberación</div>
-                </div>
-
-                <div class="resp-item">
-                    <div class="resp-label">🗺️ Módulo Geolocalización</div>
-                    <div class="resp-desc">Cálculo de rutas óptimas, integración con Google Maps, ETA en tiempo real, distancias entre puntos</div>
-                </div>
-
-                <div class="resp-item">
-                    <div class="resp-label">📱 App Ambulanciero</div>
-                    <div class="resp-desc">Recepción de asignaciones, navegación GPS, confirmación de llegada y fin de atención, alertas en tiempo real</div>
+            <section class="frame" id="operador">
+                <div class="frame-head">
+                    <div class="frame-title">
+                        <span class="eyebrow">Pantalla 02</span>
+                        <h3>Despacho y asignacion de ambulancias</h3>
+                        <p>
+                            El operador ve los incidentes cargados, filtra por categoria, zona, ambulancia y fecha/hora,
+                            revisa el estado del pedido y asigna rapido con sugerencia de ETA. Solo aparecen los moviles
+                            activos en ese horario.
+                        </p>
+                    </div>
+                    <div class="frame-badge">Solo activos en el turno</div>
                 </div>
 
-                <div class="resp-item">
-                    <div class="resp-label">📊 Módulo Facturación</div>
-                    <div class="resp-desc">Almacenamiento de históricos, consulta de datos, cálculo de facturación por proveedor, generación de notas de cobro</div>
+                <div class="section-grid">
+                    <div class="panel">
+                        <h4>Filtros de incidentes</h4>
+                        <div class="fake-input"><span>Categoria, zona, ambulancia, estado</span><span class="hint">Filtros</span></div>
+                        <div class="fake-input"><span>Ordenar por fecha y hora</span><span class="hint">Descendente</span></div>
+                        <div class="list-stack">
+                            <div class="list-item"><span class="dot red"></span><div><strong>Emergencia critica</strong><span class="subtle">Zona Norte - 09:42</span></div><span class="badge-soft warn">Pendiente</span></div>
+                            <div class="list-item"><span class="dot orange"></span><div><strong>Traslado programado</strong><span class="subtle">Zona Centro - 10:15</span></div><span class="badge-soft">Asignado</span></div>
+                            <div class="list-item"><span class="dot green"></span><div><strong>Emergencia menor</strong><span class="subtle">Zona Sur - 10:28</span></div><span class="badge-soft ok">En camino</span></div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <h4>Ambulancias y ubicacion</h4>
+                        <div class="map-box">
+                            <div class="map-line"></div>
+                            <div class="map-dot" style="top: 28px; left: 16%;"></div>
+                            <div class="map-dot orange" style="top: 78px; left: 46%;"></div>
+                            <div class="map-dot red" style="top: 110px; left: 70%;"></div>
+                            <div class="map-note">Mapa operativo con ubicacion aproximada de los moviles, estado y zona disponible para respuesta.</div>
+                        </div>
+                        <div style="height: 12px"></div>
+                        <div class="ambulance-card">
+                            <div class="ambulance-top">
+                                <div>
+                                    <strong>Ambulancia A-14</strong>
+                                    <div class="location">Activa 08:00 - 20:00 · Zona Centro</div>
+                                </div>
+                                <span class="badge-soft ok">Disponible</span>
+                            </div>
+                            <div class="eta-grid">
+                                <div class="eta"><strong>8 min</strong><span>ETA caso actual</span></div>
+                                <div class="eta"><strong>12 min</strong><span>ETA alternativo</span></div>
+                                <div class="eta"><strong>Ida y vuelta</strong><span>Si el traslado lo requiere</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <h4>Asignacion rapida</h4>
+                        <div class="ticket">
+                            <strong>Nuevo caso</strong>
+                            <div class="subtle">Mostrar tiempo estimado de llegada por ambulancia y sugerir la mejor opcion.</div>
+                        </div>
+                        <div class="list-stack">
+                            <div class="timeline-item"><span class="dot green"></span><div class="info"><strong>Ambulancia A-14</strong><span>ETA 8 min · sugerida automaticamente</span></div><span class="badge-soft ok">Asignar</span></div>
+                            <div class="timeline-item"><span class="dot orange"></span><div class="info"><strong>Ambulancia B-03</strong><span>ETA 11 min · disponible en turno</span></div><span class="badge-soft">Ver</span></div>
+                            <div class="timeline-item"><span class="dot"></span><div class="info"><strong>Ambulancia C-11</strong><span>No disponible en este horario</span></div><span class="badge-soft warn">Oculta</span></div>
+                        </div>
+                        <div style="height: 12px"></div>
+                        <div class="callout">
+                            <strong>Traslados</strong>
+                            <p>Para los casos de traslado se debe marcar si requiere ida y vuelta para que la operacion lo considere.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="frame" id="metricas">
+                <div class="frame-head">
+                    <div class="frame-title">
+                        <span class="eyebrow">Pantalla 03</span>
+                        <h3>Modulo de metricas y desempeño</h3>
+                        <p>
+                            Ajuste del periodo de analisis para ver tiempos promedio por categoria, recategorizaciones,
+                            cantidad de ambulancias activas y volumen de pedidos por estado.
+                        </p>
+                    </div>
+                    <div class="frame-badge">Rango ajustable de tiempo</div>
                 </div>
 
-                <div class="resp-item">
-                    <div class="resp-label">💾 Base de Datos</div>
-                    <div class="resp-desc">Almacenamiento centralizado de casos, asignaciones, atenciones, historial de ambulancias y ambulancieros</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Beneficios -->
-        <div class="beneficios">
-            <h2>Beneficios Clave</h2>
-            <div class="beneficios-grid">
-                <div class="beneficio-card">
-                    <div class="beneficio-icon">⚡</div>
-                    <h4>Reducción de Tiempos</h4>
-                    <p>Asignación automática y rutas optimizadas reducen tiempos de respuesta</p>
+                <div class="kpis">
+                    <div class="kpi"><span class="number">14m</span><span class="label-text">Tiempo promedio de llegada</span></div>
+                    <div class="kpi"><span class="number">28m</span><span class="label-text">Tiempo promedio de atencion</span></div>
+                    <div class="kpi"><span class="number">37</span><span class="label-text">Casos recategorizados</span></div>
+                    <div class="kpi"><span class="number">19</span><span class="label-text">Ambulancias activas</span></div>
+                    <div class="kpi"><span class="number">124</span><span class="label-text">Pedidos por estado</span></div>
                 </div>
 
-                <div class="beneficio-card">
-                    <div class="beneficio-icon">📈</div>
-                    <h4>Mayor Eficiencia</h4>
-                    <p>Optimización de recursos y distribución equilibrada de carga</p>
+                <div style="height: 14px"></div>
+
+                <div class="metrics-grid">
+                    <div class="chart-card">
+                        <h4>Promedios por categoria</h4>
+                        <div class="bars">
+                            <div class="bar" style="height: 78%;"></div>
+                            <div class="bar orange" style="height: 62%;"></div>
+                            <div class="bar blue" style="height: 48%;"></div>
+                            <div class="bar" style="height: 66%;"></div>
+                            <div class="bar orange" style="height: 41%;"></div>
+                        </div>
+                        <div class="subtle" style="margin-top: 12px;">Comparar emergencia, traslado, programado y estados intermedios por periodo.</div>
+                    </div>
+
+                    <div class="metrics-side">
+                        <div class="timeline-item"><span class="dot green"></span><div class="info"><strong>Promedio de llegada</strong><span>Se mide por categoria y ventana de tiempo.</span></div><span class="badge-soft ok">14m</span></div>
+                        <div class="timeline-item"><span class="dot orange"></span><div class="info"><strong>Promedio de atencion</strong><span>Incluye permanencia en sitio y traslado.</span></div><span class="badge-soft warn">28m</span></div>
+                        <div class="timeline-item"><span class="dot red"></span><div class="info"><strong>Recategorizaciones</strong><span>Casos modificados con motivo operativo.</span></div><span class="badge-soft">37</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="frame" id="facturacion">
+                <div class="frame-head">
+                    <div class="frame-title">
+                        <span class="eyebrow">Pantalla 04</span>
+                        <h3>Facturacion, liquidaciones y catalogo de codigos</h3>
+                        <p>
+                            El modulo permite precargar valores por codigo desde administracion para luego facturar o
+                            liquidar a ambulancias, con previsualizacion completa antes de cerrar totales. Sirve tanto
+                            para PAMI como para obras sociales como Swiss Medical.
+                        </p>
+                    </div>
+                    <div class="frame-badge">Previsualizar antes de liquidar</div>
                 </div>
 
-                <div class="beneficio-card">
-                    <div class="beneficio-icon">💰</div>
-                    <h4>Control de Costos</h4>
-                    <p>Facturación precisa y seguimiento de desempeño por proveedor</p>
-                </div>
+                <div class="billing-grid">
+                    <div class="panel">
+                        <h4>Catalogo de codigos</h4>
+                        <div class="billing-list">
+                            <div class="table-row"><div><strong>Codigo 101</strong><div class="meta">Emergencia basica</div></div><span class="badge-soft">$ 18.500</span></div>
+                            <div class="table-row"><div><strong>Codigo 212</strong><div class="meta">Traslado programado</div></div><span class="badge-soft">$ 24.000</span></div>
+                            <div class="table-row"><div><strong>Codigo 330</strong><div class="meta">Guardia / cobertura</div></div><span class="badge-soft">$ 15.000</span></div>
+                            <div class="table-row"><div><strong>Codigo 415</strong><div class="meta">Ida y vuelta</div></div><span class="badge-soft">$ 31.000</span></div>
+                        </div>
+                    </div>
 
-                <div class="beneficio-card">
-                    <div class="beneficio-icon">👁️</div>
-                    <h4>Visibilidad Total</h4>
-                    <p>Monitoreo en tiempo real de toda la operación</p>
-                </div>
+                    <div class="panel">
+                        <h4>Previsualizacion del servicio</h4>
+                        <div class="billing-row">
+                            <div class="line"><span>Pagador</span><strong>PAMI</strong></div>
+                            <div class="line"><span>Servicios seleccionados</span><strong>24 casos</strong></div>
+                            <div class="line"><span>Base de liquidacion</span><strong>$ 612.000</strong></div>
+                            <div class="line"><span>Retenciones / ajustes</span><strong>-$ 18.000</strong></div>
+                            <div class="line"><span>Total estimado</span><strong style="color: var(--brand);">$ 594.000</strong></div>
+                        </div>
+                        <div style="height: 12px"></div>
+                        <div class="callout">
+                            <strong>Vista previa obligatoria</strong>
+                            <p>Antes de facturar o liquidar, el operador revisa el detalle completo y los totales por ambulancia.</p>
+                        </div>
+                    </div>
 
-                <div class="beneficio-card">
-                    <div class="beneficio-icon">🎯</div>
-                    <h4>Precisión Predictiva</h4>
-                    <p>Estimaciones de tiempo cada vez más precisas gracias a IA</p>
+                    <div class="panel">
+                        <h4>Facturas y liquidaciones</h4>
+                        <div class="billing-list">
+                            <div class="table-row"><div><strong>Factura #0182</strong><div class="meta">Swiss Medical · Julio</div></div><span class="badge-soft ok">Emitida</span></div>
+                            <div class="table-row"><div><strong>Liquidacion #044</strong><div class="meta">Ambulancia A-14</div></div><span class="badge-soft">Pendiente</span></div>
+                            <div class="table-row"><div><strong>Factura #0183</strong><div class="meta">PAMI · Emergencias</div></div><span class="badge-soft ok">Emitida</span></div>
+                            <div class="table-row"><div><strong>Liquidacion #045</strong><div class="meta">Ambulancia B-03</div></div><span class="badge-soft warn">En revision</span></div>
+                        </div>
+                    </div>
                 </div>
+            </section>
+        </main>
 
-                <div class="beneficio-card">
-                    <div class="beneficio-icon">📊</div>
-                    <h4>Trazabilidad Completa</h4>
-                    <p>Histórico detallado para análisis y auditoría</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            <p>Sistema de Asignación Inteligente de Ambulancias | Presentación 2026</p>
+        <footer class="footer">
+            Maqueta tipo Figma para ambulancias: carga de servicio, despacho, metricas y facturacion.
         </footer>
     </div>
+
+    <script>
+        const chips = Array.from(document.querySelectorAll('.chip'));
+        const sections = Array.from(document.querySelectorAll('.frame'));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const id = entry.target.id;
+                chips.forEach((chip) => chip.classList.toggle('active', chip.getAttribute('href') === '#' + id));
+            });
+        }, { threshold: 0.45 });
+
+        sections.forEach((section) => observer.observe(section));
+    </script>
 </body>
 </html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Mock | Flujo Ambulancias</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --panel: rgba(255, 252, 246, 0.92);
+      --line: rgba(98, 82, 60, 0.18);
+      --text: #1f1a15;
+      --muted: #6c6257;
+      --brand: #0b7a75;
+      --brand-2: #f08b35;
+      --ok: #1a8f5d;
+      --warn: #c98211;
+      --danger: #bf4d4d;
+      --shadow: 0 14px 36px rgba(35, 26, 18, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(11, 122, 117, 0.08), transparent 26%),
+        radial-gradient(circle at 90% 5%, rgba(240, 139, 53, 0.10), transparent 24%),
+        linear-gradient(180deg, #faf5ec, var(--bg));
+      color: var(--text);
+    }
+
+    .frame {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 250, 242, 0.9);
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .title p {
+      margin: 4px 0 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      text-decoration: none;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 12px;
+    }
+
+    .hero h2 {
+      margin: 0 0 6px;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      max-width: 70ch;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(98, 82, 60, 0.16);
+      background: #fffdf9;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .mini-kpi {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .kpi {
+      padding: 10px;
+      border-radius: 16px;
+      background: #fffdf8;
+      border: 1px solid var(--line);
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .kpi span {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr 40px 1fr 40px 1fr;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .node {
+      padding: 12px;
+      min-height: 74px;
+      border-radius: 16px;
+      border: 1px solid rgba(11, 122, 117, 0.18);
+      background: linear-gradient(180deg, rgba(11, 122, 117, 0.08), #fffdf9);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .node strong {
+      font-size: 0.92rem;
+    }
+
+    .node span {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .arrow {
+      text-align: center;
+      color: var(--brand-2);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .section-title small {
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .table {
+      display: grid;
+      gap: 6px;
+    }
+
+    .row,
+    .head {
+      display: grid;
+      grid-template-columns: 1.1fr 0.7fr 0.75fr 0.8fr 0.7fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .head {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.68rem;
+      padding: 0 8px;
+    }
+
+    .row {
+      padding: 8px;
+      border-radius: 14px;
+      background: #fffdf9;
+      border: 1px solid var(--line);
+      font-size: 0.78rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .ok { background: rgba(26, 143, 93, 0.1); color: var(--ok); }
+    .warn { background: rgba(201, 130, 17, 0.12); color: var(--warn); }
+    .danger { background: rgba(191, 77, 77, 0.12); color: var(--danger); }
+    .blue { background: rgba(47, 85, 120, 0.10); color: #2f5578; }
+
+    .map {
+      position: relative;
+      min-height: 180px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(47, 85, 120, 0.07), transparent 48%),
+        radial-gradient(circle at 22% 30%, rgba(11, 122, 117, 0.16), transparent 20%),
+        radial-gradient(circle at 72% 64%, rgba(240, 139, 53, 0.16), transparent 22%),
+        #fff9ef;
+    }
+
+    .map-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(98, 82, 60, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(98, 82, 60, 0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.55;
+    }
+
+    .pin {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 7px rgba(11, 122, 117, 0.12);
+    }
+
+    .pin.one { top: 26%; left: 20%; }
+    .pin.two { top: 48%; left: 49%; background: var(--brand-2); box-shadow: 0 0 0 7px rgba(240, 139, 53, 0.12); }
+    .pin.three { top: 66%; left: 74%; background: var(--danger); box-shadow: 0 0 0 7px rgba(191, 77, 77, 0.12); }
+
+    .route {
+      position: absolute;
+      left: 16%;
+      top: 43%;
+      width: 64%;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(11, 122, 117, 0.25), rgba(47, 85, 120, 0.45));
+      transform: rotate(15deg);
+      transform-origin: left center;
+    }
+
+    .caption {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255, 250, 242, 0.84);
+      border: 1px solid rgba(98, 82, 60, 0.12);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .stack {
+      display: grid;
+      gap: 8px;
+    }
+
+    .compact {
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fffdf9;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fffdf9;
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    .detail-body {
+      padding: 0 12px 12px;
+    }
+
+    .footer {
+      margin-top: 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .grid-2,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        display: none;
+      }
+
+      .row,
+      .head {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header class="topbar">
+      <div class="title">
+        <h1>Mini mock de flujo</h1>
+        <p>Una sola vista, compacta, para levantar el recorrido completo sin perderse en pantallas grandes.</p>
+      </div>
+      <div class="links">
+        <a href="index.html">Board</a>
+        <a href="screens/carga.html">Carga</a>
+        <a href="screens/operador.html">Operador</a>
+        <a href="screens/metricas.html">Metricas</a>
+        <a href="screens/facturacion.html">Facturacion</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="card">
+        <h2>Flujo corto para mostrarle al cliente</h2>
+        <p>La idea es que se vea en una sola pasada: alta del caso, categorización, despacho con ambulancia sugerida, métricas y cierre por facturación.</p>
+        <div class="tags">
+          <span class="tag">Carga rápida</span>
+          <span class="tag">Despacho</span>
+          <span class="tag">Mapa visible</span>
+          <span class="tag">Tablas colapsables</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="mini-kpi">
+          <div class="kpi"><strong>4</strong><span>módulos clave</span></div>
+          <div class="kpi"><strong>1</strong><span>flujo continuo</span></div>
+          <div class="kpi"><strong>2</strong><span>vistas de apoyo</span></div>
+          <div class="kpi"><strong>0</strong><span>scroll pesado</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h3>Recorrido principal</h3>
+        <small>alto nivel</small>
+      </div>
+      <div class="flow">
+        <div class="node"><strong>1. Carga</strong><span>paciente + sintomas</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><strong>2. Operador</strong><span>ETA + asignacion</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><strong>3. Métricas</strong><span>performance + estados</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><strong>4. Facturación</strong><span>codigos + liquidacion</span></div>
+      </div>
+    </section>
+
+    <div class="grid-2">
+      <section class="card">
+        <div class="section-title">
+          <h3>Vista rápida de despacho</h3>
+          <small>tabla compacta</small>
+        </div>
+        <div class="table">
+          <div class="head"><span>Incidente</span><span>Zona</span><span>Móvil</span><span>ETA</span><span>Estado</span></div>
+          <div class="row"><strong>Emergencia crítica</strong><span>Norte</span><span>A-14</span><span>8m</span><span class="pill danger">Pend.</span></div>
+          <div class="row"><strong>Traslado programado</strong><span>Centro</span><span>B-03</span><span>11m</span><span class="pill blue">Asign.</span></div>
+          <div class="row"><strong>Emergencia menor</strong><span>Sur</span><span>C-11</span><span>15m</span><span class="pill ok">Ruta</span></div>
+        </div>
+        <div style="height:10px"></div>
+        <details>
+          <summary>Ver detalle de asignación</summary>
+          <div class="detail-body">
+            <div class="compact">Sugerida: Ambulancia A-14. Ida y vuelta: sí cuando sea traslado.</div>
+          </div>
+        </details>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <h3>Mapa de ambulancias</h3>
+          <small>mini vista</small>
+        </div>
+        <div class="map">
+          <div class="map-grid"></div>
+          <div class="route"></div>
+          <div class="pin one"></div>
+          <div class="pin two"></div>
+          <div class="pin three"></div>
+          <div class="caption">Puntos de cobertura, móvil activo y recorrido sugerido en un tamaño chico.</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid-2" style="margin-top:12px;">
+      <section class="card">
+        <div class="section-title">
+          <h3>Resumen de métricas</h3>
+          <small>tablas abreviadas</small>
+        </div>
+        <div class="table">
+          <div class="head"><span>Categoria</span><span>Lleg.</span><span>Atenc.</span><span>Recateg.</span><span>Estado</span></div>
+          <div class="row"><strong>Emergencia</strong><span>9m</span><span>22m</span><span>12</span><span class="pill ok">OK</span></div>
+          <div class="row"><strong>Traslado</strong><span>14m</span><span>31m</span><span>9</span><span class="pill warn">Rev.</span></div>
+          <div class="row"><strong>Programado</strong><span>18m</span><span>27m</span><span>6</span><span class="pill blue">Act.</span></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <h3>Cierre administrativo</h3>
+          <small>facturación</small>
+        </div>
+        <div class="stack">
+          <div class="compact"><strong>Codigos activos</strong><div style="color:var(--muted); font-size:0.8rem; margin-top:4px;">101 Emergencia, 212 Traslado, 415 Ida y vuelta</div></div>
+          <div class="compact"><strong>Previsualización</strong><div style="color:var(--muted); font-size:0.8rem; margin-top:4px;">PAMI · 24 casos · total estimado $594.000</div></div>
+          <div class="compact"><strong>Liquidación</strong><div style="color:var(--muted); font-size:0.8rem; margin-top:4px;">A-14 listo, B-03 pendiente, C-11 en revisión</div></div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">Mini mock compacto para explicar el flujo en una sola pantalla.</footer>
+  </div>
+</body>
+</html>

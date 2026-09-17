@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metricas | Sistema de Ambulancias</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="screen-page">
+    <header class="toolbar">
+      <div class="brand">
+        <div class="badge">03</div>
+        <div>
+          <h1>Metricas operativas</h1>
+          <p>Promedios por categoria, recategorizaciones, ambulancias activas y estados.</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="../index.html">Board</a>
+        <a href="carga.html">Carga</a>
+        <a href="operador.html">Operador</a>
+        <a href="facturacion.html">Facturacion</a>
+      </nav>
+    </header>
+
+    <nav class="screen-subnav" aria-label="Navegacion interna de metricas">
+      <a href="#metricas-kpi" class="active">KPIs</a>
+      <a href="#metricas-categorias">Categorias</a>
+      <a href="#metricas-estados">Estados</a>
+      <a href="#metricas-ux">Control</a>
+    </nav>
+
+    <section class="page-hero">
+      <div class="artboard compact-artboard">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Operacion diaria</span>
+            <h2>Panel de control</h2>
+            <p>Se ajusta un rango temporal para comparar la performance por categoria y revisar desvíos de atención o categorización.</p>
+          </div>
+          <div class="frame-chip">Rango editable</div>
+        </div>
+        <div class="mini-flow">
+          <div class="flow-node">Llegada</div>
+          <div class="flow-node">Atencion</div>
+          <div class="flow-node">Recategorizacion</div>
+          <div class="flow-node">Estado</div>
+        </div>
+      </div>
+      <div class="page-links">
+        <a href="../index.html#screen-gallery">Volver al board</a>
+        <a href="facturacion.html">Ir a facturacion</a>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="metricas-tabs">
+      <span class="section-label">Centro analitico</span>
+      <div class="module-tabs" data-tab-group="metricas-main">
+        <div class="tab-navbar" role="tablist" aria-label="Vistas de metricas">
+          <button class="tab-btn active" type="button" data-tab-target="kpi">KPIs</button>
+          <button class="tab-btn" type="button" data-tab-target="categorias">Categorias</button>
+          <button class="tab-btn" type="button" data-tab-target="estados">Estados</button>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel" data-tab-panel="kpi">
+            <div class="metrics-top">
+              <div class="metric-card"><strong>14m</strong><span>Promedio llegada</span></div>
+              <div class="metric-card"><strong>28m</strong><span>Promedio atencion</span></div>
+              <div class="metric-card"><strong>37</strong><span>Recategorizados</span></div>
+              <div class="metric-card"><strong>19</strong><span>Activas</span></div>
+              <div class="metric-card"><strong>124</strong><span>Pedidos</span></div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="categorias" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Comparacion por categoria</div>
+              <div class="table-compact">
+                <div class="table-head"><span>Categoria</span><span>Llegada</span><span>Atencion</span><span>Recateg.</span><span>Estado</span></div>
+                <div class="table-row-compact"><strong>Emergencia</strong><span>9m</span><span>22m</span><span>12</span><span class="status ok">OK</span></div>
+                <div class="table-row-compact"><strong>Traslado</strong><span>14m</span><span>31m</span><span>9</span><span class="status warn">Revisar</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="estados" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Distribucion por estado</div>
+              <div class="list-row"><span class="dot red"></span><div><strong>Pendiente</strong><small>Sin asignar</small></div><span class="status warn">24</span></div>
+              <div class="list-row"><span class="dot orange"></span><div><strong>Asignado</strong><small>Aceptados</small></div><span class="status">51</span></div>
+              <div class="list-row"><span class="dot green"></span><div><strong>En camino</strong><small>En ruta</small></div><span class="status ok">49</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="metricas-kpi">
+      <span class="section-label">Indicadores clave</span>
+      <div class="metrics-top">
+        <div class="metric-card"><strong>14m</strong><span>Tiempo promedio de llegada</span></div>
+        <div class="metric-card"><strong>28m</strong><span>Tiempo promedio de atención</span></div>
+        <div class="metric-card"><strong>37</strong><span>Casos recategorizados</span></div>
+        <div class="metric-card"><strong>19</strong><span>Ambulancias activas</span></div>
+        <div class="metric-card"><strong>124</strong><span>Pedidos por estado</span></div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="metricas-categorias">
+      <span class="section-label">Rendimiento por categoria</span>
+      <div class="variant-grid">
+        <div class="screen-panel panel-large compact">
+          <div class="panel-title">Promedios por categoria</div>
+          <div class="chart">
+            <div class="bar b1"></div>
+            <div class="bar b2"></div>
+            <div class="bar b3"></div>
+            <div class="bar b4"></div>
+            <div class="bar b5"></div>
+          </div>
+          <div class="chart-legend">
+            <span>Emergencia</span><span>Urgente</span><span>Traslado</span><span>Programado</span><span>Estable</span>
+          </div>
+        </div>
+        <div class="modal-sheet">
+          <div class="panel-title">Filtros de periodo</div>
+          <div class="stack">
+            <div class="input-row"><span>Hoy</span><span>Seleccionado</span></div>
+            <div class="input-row"><span>Ultimos 7 dias</span><span>Disponible</span></div>
+            <div class="input-row"><span>Ultimos 30 dias</span><span>Disponible</span></div>
+            <div class="input-row"><span>Por zona o categoria</span><span>Filtro</span></div>
+          </div>
+          <details class="collapse" open style="margin-top:12px;">
+            <summary>Tabla resumida de categorias</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-head"><span>Categoria</span><span>Llegada</span><span>Atencion</span><span>Recateg.</span><span>Estado</span></div>
+                <div class="table-row-compact"><strong>Emergencia</strong><span>9m</span><span>22m</span><span>12</span><span class="status ok">OK</span></div>
+                <div class="table-row-compact"><strong>Traslado</strong><span>14m</span><span>31m</span><span>9</span><span class="status">Estable</span></div>
+                <div class="table-row-compact"><strong>Programado</strong><span>18m</span><span>27m</span><span>6</span><span class="status warn">Revisar</span></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="metricas-estados">
+      <span class="section-label">Estado operativo</span>
+      <div class="variant-grid">
+        <div class="screen-panel compact">
+          <div class="panel-title">Eventos del periodo</div>
+          <div class="timeline">
+            <div class="timeline-item"><span class="dot green"></span><div><strong>Promedio de llegada</strong><small>Se calcula por categoria y zona.</small></div></div>
+            <div class="timeline-item"><span class="dot orange"></span><div><strong>Promedio de atención</strong><small>Incluye permanencia y traslado.</small></div></div>
+            <div class="timeline-item"><span class="dot red"></span><div><strong>Recategorizaciones</strong><small>Casos editados con motivo.</small></div></div>
+          </div>
+        </div>
+        <div class="screen-panel compact">
+          <div class="panel-title">Distribucion de estados</div>
+          <div class="stack">
+            <div class="list-row"><span class="dot red"></span><div><strong>Pendiente</strong><small>Casos sin asignar</small></div><span class="status warn">24</span></div>
+            <div class="list-row"><span class="dot orange"></span><div><strong>Asignado</strong><small>Casos aceptados</small></div><span class="status">51</span></div>
+            <div class="list-row"><span class="dot green"></span><div><strong>En camino</strong><small>Móviles en ruta</small></div><span class="status ok">49</span></div>
+          </div>
+          <details class="collapse" style="margin-top:12px;">
+            <summary>Ver detalle por estado</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-row-compact"><strong>Pendiente</strong><span>24</span><span class="status warn">Crítico</span><span></span><span></span></div>
+                <div class="table-row-compact"><strong>Asignado</strong><span>51</span><span class="status">Normal</span><span></span><span></span></div>
+                <div class="table-row-compact"><strong>En camino</strong><span>49</span><span class="status ok">OK</span><span></span><span></span></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="metricas-ux">
+      <span class="section-label">Control y seguimiento</span>
+      <div class="ux-toolbar">
+        <div class="adjustable-filters">
+          <div class="panel-title">Filtros ajustables de metricas</div>
+          <div class="filter-row tight">
+            <div class="mini-filter">Categoria</div>
+            <div class="mini-filter">Zona</div>
+            <div class="mini-filter">Estado</div>
+            <div class="mini-filter">Tipo de movil</div>
+          </div>
+          <div class="range-row" style="margin-top:8px;">
+            <div class="fake-select">Periodo: ultimos 7 dias</div>
+            <div class="fake-select">Comparar: semana anterior</div>
+            <div class="fake-select">Agrupar: por hora</div>
+          </div>
+        </div>
+
+        <details class="collapse" open>
+          <summary>Tabla colapsable de desvio por categoria</summary>
+          <div class="collapse-body">
+            <div class="table-compact">
+              <div class="table-head"><span>Categoria</span><span>Meta llegada</span><span>Real</span><span>Desvio</span><span>Estado</span></div>
+              <div class="table-row-compact"><strong>Emergencia</strong><span>10m</span><span>9m</span><span>-1m</span><span class="status ok">OK</span></div>
+              <div class="table-row-compact"><strong>Traslado</strong><span>12m</span><span>14m</span><span>+2m</span><span class="status warn">Revisar</span></div>
+              <div class="table-row-compact"><strong>Programado</strong><span>18m</span><span>18m</span><span>0m</span><span class="status">Estable</span></div>
+            </div>
+          </div>
+        </details>
+
+        <div class="action-row">
+          <button class="button primary" type="button" data-open-modal="modal-metricas-step">Analisis por pasos</button>
+          <button class="button" type="button" data-open-modal="modal-metricas-filtros">Ajustar filtros</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="modal-metricas-step" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-metricas-step-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-metricas-step-title">Revision de metricas por pasos</strong>
+          <span class="subtle">Flujo guiado para evaluar performance operacional.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="wizard-steps steps-3">
+        <span class="wizard-step active" data-step-indicator="1">1 Periodo</span>
+        <span class="wizard-step" data-step-indicator="2">2 Comparacion</span>
+        <span class="wizard-step" data-step-indicator="3">3 Resultados</span>
+      </div>
+      <form data-wizard data-total-steps="3" data-current-step="1">
+        <section class="step-panel active" data-step-panel="1">
+          <div class="panel-title">Seleccion del periodo</div>
+          <div class="field"><label>Rango</label><div class="input-row"><span>01/07 al 29/07</span><span>Editar</span></div></div>
+          <div class="field"><label>Zona</label><div class="input-row"><span>Todas</span><span>Filtro</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="2">
+          <div class="panel-title">Comparacion por categoria</div>
+          <details class="collapse" open>
+            <summary>Tabla colapsable de comparacion</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-head"><span>Categoria</span><span>Llegada</span><span>Atencion</span><span>Recateg.</span><span>Estado</span></div>
+                <div class="table-row-compact"><strong>Emergencia</strong><span>9m</span><span>22m</span><span>12</span><span class="status ok">OK</span></div>
+                <div class="table-row-compact"><strong>Traslado</strong><span>14m</span><span>31m</span><span>9</span><span class="status warn">Revisar</span></div>
+              </div>
+            </div>
+          </details>
+        </section>
+        <section class="step-panel" data-step-panel="3">
+          <div class="panel-title">Resumen final</div>
+          <div class="alert-box"><strong>Hallazgo principal</strong><p>El mayor desvio se concentra en traslados programados en horario pico.</p></div>
+          <div class="input-row"><span>Accion sugerida</span><span>Aumentar moviles de 16 a 20 hs</span></div>
+        </section>
+        <div class="modal-footer">
+          <button class="button" type="button" data-step-prev>Anterior</button>
+          <button class="button primary" type="button" data-step-next>Siguiente</button>
+          <button class="button primary" type="submit" data-submit-wizard hidden>Guardar vista</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-metricas-filtros" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-metricas-filtros-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-metricas-filtros-title">Filtros avanzados de metricas</strong>
+          <span class="subtle">Ajusta granularidad temporal y criterios de comparacion.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="range-row">
+        <div class="fake-select">Frecuencia: cada 30 min</div>
+        <div class="fake-select">Solo recategorizados</div>
+        <div class="fake-select">Excluir cancelados</div>
+      </div>
+      <details class="collapse" open style="margin-top:10px;">
+        <summary>Tabla colapsable de pedidos por estado</summary>
+        <div class="collapse-body">
+          <div class="table-compact">
+            <div class="table-head"><span>Estado</span><span>Cantidad</span><span>%</span><span>Variacion</span><span>Lectura</span></div>
+            <div class="table-row-compact"><strong>Pendiente</strong><span>24</span><span>19%</span><span>+3%</span><span class="status warn">Sube</span></div>
+            <div class="table-row-compact"><strong>Asignado</strong><span>51</span><span>41%</span><span>-1%</span><span class="status">Estable</span></div>
+            <div class="table-row-compact"><strong>En camino</strong><span>49</span><span>40%</span><span>-2%</span><span class="status ok">Mejora</span></div>
+          </div>
+        </div>
+      </details>
+      <div class="modal-footer">
+        <button class="button" type="button" data-close-modal>Cerrar</button>
+        <button class="button primary" type="button" data-close-modal>Aplicar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+</body>
+</html>

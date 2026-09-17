@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facturacion | Sistema de Ambulancias</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="screen-page">
+    <header class="toolbar">
+      <div class="brand">
+        <div class="badge">04</div>
+        <div>
+          <h1>Facturacion y liquidacion</h1>
+          <p>Valores por codigo, previsualizacion total y listado de facturas o liquidaciones.</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="../index.html">Board</a>
+        <a href="carga.html">Carga</a>
+        <a href="operador.html">Operador</a>
+        <a href="metricas.html">Metricas</a>
+      </nav>
+    </header>
+
+    <nav class="screen-subnav" aria-label="Navegacion interna de facturacion">
+      <a href="#fact-codigos" class="active">Codigos</a>
+      <a href="#fact-operativa">Generar e historico</a>
+      <a href="#fact-ux">Reglas y control</a>
+    </nav>
+
+    <section class="page-hero">
+      <div class="artboard compact-artboard">
+        <div class="artboard-head">
+          <div>
+            <span class="eyebrow">Operacion diaria</span>
+            <h2>Factura y liquidacion</h2>
+            <p>Se cargan valores por codigo desde administracion y se previsualiza todo antes de emitir al pagador o liquidar a la ambulancia.</p>
+          </div>
+          <div class="frame-chip">Previsualizar antes</div>
+        </div>
+        <div class="mini-flow">
+          <div class="flow-node">Codigo</div>
+          <div class="flow-node">Calculo</div>
+          <div class="flow-node">Preview</div>
+          <div class="flow-node">Emitir</div>
+        </div>
+      </div>
+      <div class="page-links">
+        <a href="../index.html#screen-gallery">Volver al board</a>
+        <a href="carga.html">Ir a carga</a>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="fact-tabs">
+      <span class="section-label">Centro financiero</span>
+      <div class="module-tabs" data-tab-group="fact-main">
+        <div class="tab-navbar" role="tablist" aria-label="Vistas de facturacion">
+          <button class="tab-btn active" type="button" data-tab-target="codigos">Codigos</button>
+          <button class="tab-btn" type="button" data-tab-target="generar">Generar</button>
+          <button class="tab-btn" type="button" data-tab-target="historico">Historico</button>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel" data-tab-panel="codigos">
+            <div class="screen-panel compact">
+              <div class="panel-title">Catalogo resumido</div>
+              <div class="table-compact">
+                <div class="table-head"><span>Codigo</span><span>Servicio</span><span>Valor</span><span>Tipo</span><span>Estado</span></div>
+                <div class="table-row-compact"><strong>101</strong><span>Emergencia</span><span>$18.500</span><span>Base</span><span class="status ok">Activo</span></div>
+                <div class="table-row-compact"><strong>212</strong><span>Traslado</span><span>$24.000</span><span>Base</span><span class="status ok">Activo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="generar" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Generacion rapida</div>
+              <div class="input-row"><span>Periodo 01/07 a 31/07</span><span>Editar</span></div>
+              <div class="input-row"><span>Resumen por proveedor</span><span>Disponible</span></div>
+              <div class="action-row"><button class="button primary" type="button" data-open-modal="modal-fact-summary">Ver resumen</button></div>
+            </div>
+          </div>
+          <div class="tab-panel" data-tab-panel="historico" hidden>
+            <div class="screen-panel compact">
+              <div class="panel-title">Historico consolidado</div>
+              <div class="table-compact">
+                <div class="table-row-compact"><strong>#0182</strong><span>Swiss Medical</span><span>$182.400</span><span>Julio</span><span class="status ok">Emitida</span></div>
+                <div class="table-row-compact"><strong>#0183</strong><span>PAMI</span><span>$311.200</span><span>Julio</span><span class="status ok">Emitida</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="fact-codigos">
+      <span class="section-label">Catalogo vigente</span>
+      <div class="variant-grid">
+        <div class="screen-panel compact">
+          <div class="panel-title">Catalogo de codigos</div>
+          <details class="collapse" open>
+            <summary>Tabla de codigos</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-head"><span>Codigo</span><span>Servicio</span><span>Valor</span><span>Tipo</span><span>Estado</span></div>
+                <div class="table-row-compact"><strong>101</strong><span>Emergencia</span><span>$18.500</span><span>Base</span><span class="status ok">Activo</span></div>
+                <div class="table-row-compact"><strong>212</strong><span>Traslado</span><span>$24.000</span><span>Base</span><span class="status ok">Activo</span></div>
+                <div class="table-row-compact"><strong>415</strong><span>Ida y vuelta</span><span>$31.000</span><span>Extra</span><span class="status warn">Validar</span></div>
+              </div>
+            </div>
+          </details>
+        </div>
+        <div class="screen-panel compact">
+          <div class="panel-title">Origen del cobro</div>
+          <div class="stack">
+            <div class="input-row"><span>PAMI</span><span>Pagador</span></div>
+            <div class="input-row"><span>Swiss Medical</span><span>Obra social</span></div>
+            <div class="input-row"><span>Privado</span><span>Particular</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard">
+      <span class="section-label">Calculo actual</span>
+      <div class="variant-grid">
+        <div class="screen-panel panel-large compact">
+          <div class="panel-title">Previsualizacion</div>
+          <div class="preview-box">
+            <div class="preview-line"><span>Pagador</span><strong>PAMI</strong></div>
+            <div class="preview-line"><span>Servicios</span><strong>24 casos</strong></div>
+            <div class="preview-line"><span>Base</span><strong>$612.000</strong></div>
+            <div class="preview-line"><span>Ajustes</span><strong>-$18.000</strong></div>
+            <div class="preview-line total"><span>Total estimado</span><strong>$594.000</strong></div>
+          </div>
+          <div class="action-row">
+            <div class="button primary">Emitir factura</div>
+            <div class="button">Liquidar ambulancias</div>
+          </div>
+        </div>
+        <div class="modal-sheet">
+          <div class="panel-title">Detalle por ambulancia</div>
+          <details class="collapse" open>
+            <summary>Tabla de liquidacion por móvil</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-head"><span>Móvil</span><span>Casos</span><span>Total</span><span>Periodo</span><span>Estado</span></div>
+                <div class="table-row-compact"><strong>A-14</strong><span>12</span><span>$214.000</span><span>Julio</span><span class="status ok">Listo</span></div>
+                <div class="table-row-compact"><strong>B-03</strong><span>7</span><span>$148.000</span><span>Julio</span><span class="status">Pendiente</span></div>
+                <div class="table-row-compact"><strong>C-11</strong><span>5</span><span>$89.000</span><span>Julio</span><span class="status warn">Revisar</span></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard">
+      <span class="section-label">Documentos emitidos</span>
+      <div class="variant-grid">
+        <div class="screen-panel compact">
+          <div class="panel-title">Facturas</div>
+          <details class="collapse" open>
+            <summary>Listado de facturas</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-row-compact"><strong>#0182</strong><span>Swiss Medical</span><span>$182.400</span><span>Julio</span><span class="status ok">Emitida</span></div>
+                <div class="table-row-compact"><strong>#0183</strong><span>PAMI</span><span>$311.200</span><span>Julio</span><span class="status ok">Emitida</span></div>
+              </div>
+            </div>
+          </details>
+        </div>
+        <div class="screen-panel compact">
+          <div class="panel-title">Liquidaciones</div>
+          <details class="collapse" open>
+            <summary>Listado de liquidaciones</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-row-compact"><strong>#044</strong><span>A-14</span><span>$214.000</span><span>Julio</span><span class="status">Pendiente</span></div>
+                <div class="table-row-compact"><strong>#045</strong><span>B-03</span><span>$148.000</span><span>Julio</span><span class="status warn">En revision</span></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="fact-ux">
+    <span class="section-label">Reglas y control</span>
+    <div class="ux-toolbar">
+      <div class="adjustable-filters">
+        <div class="panel-title">Filtros ajustables de facturacion</div>
+        <div class="filter-row tight">
+          <div class="mini-filter">Pagador</div>
+          <div class="mini-filter">Codigo</div>
+          <div class="mini-filter">Estado</div>
+          <div class="mini-filter">Periodo</div>
+        </div>
+        <div class="range-row" style="margin-top:8px;">
+          <div class="fake-select">Desde 01/07/2026</div>
+          <div class="fake-select">Hasta 31/07/2026</div>
+          <div class="fake-select">Con saldo pendiente</div>
+        </div>
+      </div>
+
+      <details class="collapse" open>
+        <summary>Tabla colapsable de control de codigos</summary>
+        <div class="collapse-body">
+          <div class="table-compact">
+            <div class="table-head"><span>Codigo</span><span>Pagador</span><span>Valor</span><span>Uso</span><span>Estado</span></div>
+            <div class="table-row-compact"><strong>101</strong><span>PAMI</span><span>$18.500</span><span>42</span><span class="status ok">Vigente</span></div>
+            <div class="table-row-compact"><strong>212</strong><span>Swiss</span><span>$24.000</span><span>31</span><span class="status ok">Vigente</span></div>
+            <div class="table-row-compact"><strong>415</strong><span>Multi</span><span>$31.000</span><span>12</span><span class="status warn">Revisar</span></div>
+          </div>
+        </div>
+      </details>
+
+      <div class="action-row">
+        <button class="button primary" type="button" data-open-modal="modal-fact-step">Liquidar por pasos</button>
+        <button class="button" type="button" data-open-modal="modal-fact-filtros">Ajustar filtros</button>
+      </div>
+    </div>
+    </section>
+
+    <section class="mini-artboard compact-artboard" id="fact-operativa">
+      <span class="section-label">Facturacion operativa</span>
+      <div class="view-switch">
+        <button class="view-tab active" type="button" data-billing-view-btn="generar">Generar facturacion</button>
+        <button class="view-tab" type="button" data-billing-view-btn="historico">Historico</button>
+      </div>
+
+      <div class="view-panel" data-billing-view-panel="generar">
+        <div class="variant-grid">
+          <div class="screen-panel compact">
+            <div class="panel-title">Generar por periodo</div>
+            <div class="stack">
+              <div class="field">
+                <label>Fecha desde</label>
+                <input class="field-input" type="date" value="2026-07-01" data-period-from />
+              </div>
+              <div class="field">
+                <label>Fecha hasta</label>
+                <input class="field-input" type="date" value="2026-07-31" data-period-to />
+              </div>
+              <div class="field">
+                <label>Tipo de prestador</label>
+                <select class="field-input">
+                  <option>Todos</option>
+                  <option>PAMI</option>
+                  <option>Swiss Medical</option>
+                  <option>Privado</option>
+                </select>
+              </div>
+            </div>
+            <div class="action-row">
+              <button class="button primary" type="button" data-generate-summary>Ver resumen para confirmar</button>
+            </div>
+            <div class="alert-box" data-billing-feedback>Define el periodo, revisa el resumen por proveedor y confirma para consolidar en el historico.</div>
+          </div>
+          <div class="screen-panel compact">
+            <div class="panel-title">Resumen por proveedor (previo)</div>
+            <div class="table-compact">
+              <div class="table-head"><span>Proveedor</span><span>Servicios</span><span>Base</span><span>Ajustes</span><span>Total</span></div>
+              <div class="table-row-compact"><strong>PAMI</strong><span>14</span><span>$350.000</span><span>-$10.000</span><span class="status ok">$340.000</span></div>
+              <div class="table-row-compact"><strong>Swiss Medical</strong><span>7</span><span>$180.000</span><span>-$4.000</span><span class="status">$176.000</span></div>
+              <div class="table-row-compact"><strong>Privado</strong><span>3</span><span>$78.000</span><span>-$0</span><span class="status">$78.000</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view-panel" data-billing-view-panel="historico" hidden>
+        <div class="screen-panel compact history-table">
+          <div class="panel-title">Tabla historica consolidada</div>
+          <div class="table-compact" data-billing-history-table>
+            <div class="table-head"><span>Registro</span><span>Proveedor</span><span>Total</span><span>Periodo</span><span>Estado</span></div>
+            <div class="table-row-compact" data-history-row="true" data-id="#0182" data-provider="Swiss Medical" data-period="2026-07-01 al 2026-07-31" data-total="$182.400" data-cases="11 servicios"><strong>#0182</strong><span>Swiss Medical</span><span>$182.400</span><span>Julio</span><span class="status ok">Emitida</span></div>
+            <div class="table-row-compact" data-history-row="true" data-id="#0183" data-provider="PAMI" data-period="2026-07-01 al 2026-07-31" data-total="$311.200" data-cases="13 servicios"><strong>#0183</strong><span>PAMI</span><span>$311.200</span><span>Julio</span><span class="status ok">Emitida</span></div>
+            <div class="table-row-compact" data-history-row="true" data-id="#045" data-provider="Ambulancia B-03" data-period="2026-07-01 al 2026-07-31" data-total="$148.000" data-cases="7 servicios"><strong>#045</strong><span>Ambulancia B-03</span><span>$148.000</span><span>Julio</span><span class="status warn">En revision</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="modal-fact-step" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-fact-step-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-fact-step-title">Facturacion y liquidacion por pasos</strong>
+          <span class="subtle">Wizard para revisar totales antes de emitir.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="wizard-steps">
+        <span class="wizard-step active" data-step-indicator="1">1 Codigos</span>
+        <span class="wizard-step" data-step-indicator="2">2 Pagador</span>
+        <span class="wizard-step" data-step-indicator="3">3 Preview</span>
+        <span class="wizard-step" data-step-indicator="4">4 Emitir</span>
+      </div>
+      <form data-wizard data-total-steps="4" data-current-step="1">
+        <section class="step-panel active" data-step-panel="1">
+          <div class="panel-title">Seleccion de codigos</div>
+          <div class="field"><label>Codigo principal</label><div class="input-row"><span>101 Emergencia</span><span>Activo</span></div></div>
+          <div class="field"><label>Adicional</label><div class="input-row"><span>415 Ida y vuelta</span><span>Opcional</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="2">
+          <div class="panel-title">Definir pagador</div>
+          <div class="field"><label>Entidad</label><div class="input-row"><span>PAMI</span><span>Principal</span></div></div>
+          <div class="field"><label>Contrato</label><div class="input-row"><span>Plan julio 2026</span><span>Vigente</span></div></div>
+        </section>
+        <section class="step-panel" data-step-panel="3">
+          <div class="panel-title">Previsualizacion</div>
+          <details class="collapse" open>
+            <summary>Tabla colapsable de totales</summary>
+            <div class="collapse-body">
+              <div class="table-compact">
+                <div class="table-head"><span>Concepto</span><span>Cant.</span><span>Unitario</span><span>Subtotal</span><span>Estado</span></div>
+                <div class="table-row-compact"><strong>Emergencia</strong><span>24</span><span>$18.500</span><span>$444.000</span><span class="status ok">OK</span></div>
+                <div class="table-row-compact"><strong>Ida y vuelta</strong><span>12</span><span>$31.000</span><span>$372.000</span><span class="status">Incluido</span></div>
+              </div>
+            </div>
+          </details>
+        </section>
+        <section class="step-panel" data-step-panel="4">
+          <div class="panel-title">Confirmacion final</div>
+          <div class="alert-box"><strong>Total neto estimado: $594.000</strong><p>Se validaron codigos, pagador y detalle por ambulancia antes de emitir.</p></div>
+          <div class="input-row"><span>Accion</span><span>Emitir factura y liquidar</span></div>
+        </section>
+        <div class="modal-footer">
+          <button class="button" type="button" data-step-prev>Anterior</button>
+          <button class="button primary" type="button" data-step-next>Siguiente</button>
+          <button class="button primary" type="submit" data-submit-wizard hidden>Confirmar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-fact-filtros" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-fact-filtros-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-fact-filtros-title">Filtros avanzados de documentos</strong>
+          <span class="subtle">Refina listados de facturas y liquidaciones.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="range-row">
+        <div class="fake-select">Documento: factura</div>
+        <div class="fake-select">Estado: pendientes</div>
+        <div class="fake-select">Pagador: PAMI</div>
+      </div>
+      <details class="collapse" open style="margin-top:10px;">
+        <summary>Tabla colapsable de documentos filtrados</summary>
+        <div class="collapse-body">
+          <div class="table-compact">
+            <div class="table-head"><span>Documento</span><span>Pagador</span><span>Total</span><span>Periodo</span><span>Estado</span></div>
+            <div class="table-row-compact"><strong>#0183</strong><span>PAMI</span><span>$311.200</span><span>Julio</span><span class="status ok">Emitida</span></div>
+            <div class="table-row-compact"><strong>#044</strong><span>A-14</span><span>$214.000</span><span>Julio</span><span class="status">Pendiente</span></div>
+          </div>
+        </div>
+      </details>
+      <div class="modal-footer">
+        <button class="button" type="button" data-close-modal>Cerrar</button>
+        <button class="button primary" type="button" data-close-modal>Aplicar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-fact-summary" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-fact-summary-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-fact-summary-title">Resumen final de facturacion</strong>
+          <span class="subtle">Confirma para consolidar el periodo en el historico.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="preview-box">
+        <div class="preview-line"><span>Periodo</span><strong data-summary-period>2026-07-01 al 2026-07-31</strong></div>
+        <div class="preview-line"><span>Cantidad</span><strong data-summary-cases>24 servicios</strong></div>
+        <div class="preview-line total"><span>Total consolidado</span><strong data-summary-total>$594.000</strong></div>
+      </div>
+      <details class="collapse" open style="margin-top:10px;">
+        <summary>Resumen por proveedor</summary>
+        <div class="collapse-body">
+          <div class="table-compact">
+            <div class="table-head"><span>Proveedor</span><span>Servicios</span><span>Base</span><span>Ajustes</span><span>Total</span></div>
+            <div class="table-row-compact"><strong>PAMI</strong><span>14</span><span>$350.000</span><span>-$10.000</span><span class="status ok">$340.000</span></div>
+            <div class="table-row-compact"><strong>Swiss Medical</strong><span>7</span><span>$180.000</span><span>-$4.000</span><span class="status">$176.000</span></div>
+            <div class="table-row-compact"><strong>Privado</strong><span>3</span><span>$78.000</span><span>-$0</span><span class="status">$78.000</span></div>
+          </div>
+        </div>
+      </details>
+      <div class="modal-footer">
+        <button class="button" type="button" data-close-modal>Cancelar</button>
+        <button class="button primary" type="button" data-consolidate-billing>Confirmar y consolidar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-fact-detail" aria-hidden="true">
+    <div class="modal-dialog wide" role="dialog" aria-modal="true" aria-labelledby="modal-fact-detail-title">
+      <div class="modal-head">
+        <div>
+          <strong id="modal-fact-detail-title">Detalle historico expandido</strong>
+          <span class="subtle">Vista completa de la factura o liquidacion seleccionada.</span>
+        </div>
+        <button class="modal-close-btn" type="button" data-close-modal>×</button>
+      </div>
+      <div class="variant-grid">
+        <div class="screen-panel compact">
+          <div class="panel-title">Resumen general</div>
+          <div class="preview-box">
+            <div class="preview-line"><span>ID</span><strong data-detail-id>#0183</strong></div>
+            <div class="preview-line"><span>Proveedor</span><strong data-detail-provider>PAMI</strong></div>
+            <div class="preview-line"><span>Periodo</span><strong data-detail-period>2026-07-01 al 2026-07-31</strong></div>
+            <div class="preview-line"><span>Casos</span><strong data-detail-cases>13 servicios</strong></div>
+            <div class="preview-line total"><span>Total</span><strong data-detail-total>$311.200</strong></div>
+          </div>
+        </div>
+        <div class="screen-panel compact">
+          <div class="panel-title">Detalle de lineas</div>
+          <div class="table-compact">
+            <div class="table-head"><span>Codigo</span><span>Concepto</span><span>Cantidad</span><span>Unitario</span><span>Subtotal</span></div>
+            <div class="table-row-compact"><strong>101</strong><span>Emergencia</span><span>8</span><span>$18.500</span><span class="status">$148.000</span></div>
+            <div class="table-row-compact"><strong>212</strong><span>Traslado</span><span>3</span><span>$24.000</span><span class="status">$72.000</span></div>
+            <div class="table-row-compact"><strong>415</strong><span>Ida y vuelta</span><span>2</span><span>$31.000</span><span class="status ok">$62.000</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../app.js"></script>
+</body>
+</html>
