@@ -219,6 +219,78 @@ const ambulanceSeed: Ambulance[] = [
   { id: 'C-11', name: 'C-11', zone: 'Sur', state: 'En camino', eta: '15m', crew: '2x EMT' },
   { id: 'D-08', name: 'D-08', zone: 'Oeste', state: 'Disponible', eta: '24m', crew: '1x médico + 1x EMT' },
   { id: 'E-02', name: 'E-02', zone: 'Norte', state: 'Reservada', eta: '19m', crew: '2x EMT' },
+  ...Array.from({ length: 20 }, (_, index): Ambulance => {
+    const zones: Ambulance['zone'][] = ['Norte', 'Centro', 'Sur', 'Oeste'];
+    const states: AmbulanceState[] = ['Disponible', 'En servicio', 'En camino', 'Reservada'];
+    const id = `M-${String(index + 6).padStart(2, '0')}`;
+
+    return {
+      id,
+      name: id,
+      zone: zones[index % zones.length],
+      state: states[index % states.length],
+      eta: `${6 + (index * 3) % 25}m`,
+      crew: index % 2 === 0 ? '2x EMT' : '1x médico + 1x EMT',
+    };
+  }),
+];
+
+const mockOperatorIncidents: OperatorIncident[] = [
+  ...operatorSeed,
+  ...Array.from({ length: 20 }, (_, index): OperatorIncident => {
+    const patients = [
+      'Valentina Ríos', 'Héctor Molina', 'Camila Acosta', 'Raúl Benítez', 'Julieta Navarro',
+      'Esteban Silva', 'Mónica Ferreyra', 'Federico Cabrera', 'Paula Giménez', 'Ricardo Medina',
+      'Florencia Arias', 'Oscar Peralta', 'Daniela Suárez', 'Gustavo Romero', 'Natalia Campos',
+      'Miguel Ortiz', 'Verónica Luna', 'Sergio Castro', 'Mariana Costa', 'Eduardo Herrera',
+    ];
+    const titles = [
+      'Dolor torácico', 'Caída en domicilio', 'Dificultad respiratoria', 'Control clínico',
+      'Traumatismo leve', 'Traslado a centro médico', 'Fiebre persistente', 'Descompensación',
+    ];
+    const zones: Ambulance['zone'][] = ['Norte', 'Centro', 'Sur', 'Oeste'];
+    const categories: OperatorIncident['category'][] = ['Emergencia', 'Traslado', 'Programado'];
+    const triageColors: OperatorIncident['triageColor'][] = ['Rojo', 'Amarillo', 'Verde', 'Negro'];
+    const states: OperatorIncident['state'][] = ['Pendiente', 'Asignado', 'En camino'];
+    const providers = ['PAMI', 'OSDE', 'Medicus', 'Galeno', 'Swiss Medical'];
+    const neighborhoods = ['Palermo', 'Caballito', 'Flores', 'Belgrano', 'Almagro', 'Villa Devoto'];
+    const streets = ['Rivadavia', 'Santa Fe', 'Corrientes', 'San Martín', 'Belgrano', 'Mitre'];
+    const category = categories[index % categories.length];
+    const provider = providers[index % providers.length];
+    const ambulance = ambulanceSeed[index + 5];
+    const minute = String((index * 7) % 60).padStart(2, '0');
+    const hour = String(8 + (index % 12)).padStart(2, '0');
+
+    return {
+      ...operatorSeed[index % operatorSeed.length],
+      id: `INC-${1006 + index}`,
+      nro: String(1370 + index).padStart(6, '0'),
+      patient: patients[index],
+      title: titles[index % titles.length],
+      domicilio: `${streets[index % streets.length]} ${320 + index * 17}`,
+      edad: `${24 + (index * 7) % 70}A`,
+      barrio: neighborhoods[index % neighborhoods.length],
+      zone: zones[index % zones.length],
+      category,
+      delay: 5 + (index * 7) % 31,
+      ambulance: ambulance.id,
+      eta: ambulance.eta,
+      state: states[index % states.length],
+      note: ['Paciente estable', 'Requiere evaluación prioritaria', 'Coordinar ingreso con guardia', 'Traslado según disponibilidad'][index % 4],
+      sexo: index % 2 === 0 ? 'F' : 'M',
+      triageColor: triageColors[index % triageColors.length],
+      obraSocial: provider,
+      afiliado: `DEMO-${String(6000 + index)}`,
+      plan: ['Plan Base', 'Plan Integral', 'Plan Oro'][index % 3],
+      copago: '0',
+      telefono: `11${String(50000000 + index * 137)}`,
+      receptor: provider,
+      despachador: ['MMARTINEZ', 'RGOMEZ', 'LPAEZ', 'FSANCHEZ'][index % 4],
+      horaEnvio: `${hour}:${minute}`,
+      horaRecepcion: `${hour}:${String((index * 7 + 8) % 60).padStart(2, '0')}`,
+      recursoNecesario: category === 'Emergencia' ? 'Complejidad media' : category === 'Traslado' ? 'Soporte básico' : 'Traslado programado',
+    };
+  }),
 ];
 
 const crewSeed: AmbulanceCrewMember[] = [
@@ -236,7 +308,7 @@ function initialAmbulanceQueues() {
   return Object.fromEntries(
     ambulanceSeed.map((ambulance) => [
       ambulance.id,
-      operatorSeed.filter((incident) => incident.ambulance === ambulance.id).map((incident) => incident.id),
+      mockOperatorIncidents.filter((incident) => incident.ambulance === ambulance.id).map((incident) => incident.id),
     ]),
   );
 }
@@ -368,7 +440,7 @@ function App() {
   const [ambulanceDraft, setAmbulanceDraft] = useState({ id: '', zone: 'Norte', eta: '10m', crew: '' });
 
   const [operatorTab, setOperatorTab] = useState<OperatorTab>('incidentes');
-  const [operatorIncidents, setOperatorIncidents] = useState<OperatorIncident[]>(operatorSeed);
+  const [operatorIncidents, setOperatorIncidents] = useState<OperatorIncident[]>(mockOperatorIncidents);
   const [ambulances, setAmbulances] = useState<Ambulance[]>(ambulanceSeed);
   const [ambulanceQueues, setAmbulanceQueues] = useState<Record<string, string[]>>(initialAmbulanceQueues);
   const [selectedResourceId, setSelectedResourceId] = useState(ambulanceSeed[0]?.id ?? '');
