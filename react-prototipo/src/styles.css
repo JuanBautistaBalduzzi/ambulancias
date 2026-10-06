@@ -1291,16 +1291,28 @@ summary {
 
 .ambulance-sidebar-top {
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 5px;
   align-items: center;
+  min-width: 0;
+}
+
+.ambulance-sidebar-meta {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.56rem;
+  line-height: 1.1;
 }
 
 .ambulance-card-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
   position: relative;
+  flex: 0 0 auto;
 }
 
 .icon-action {

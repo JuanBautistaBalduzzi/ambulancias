@@ -1240,6 +1240,7 @@ function App() {
                         >
                           <div className="ambulance-sidebar-top">
                             <strong>{ambulance.name}</strong>
+                            <span className="ambulance-sidebar-meta">{ambulance.zone} · ETA {ambulance.eta}</span>
                             <div className="ambulance-card-actions">
                               <span className={`pill ${ambulanceStatusClass(ambulance)}`}>{ambulanceStatusLabel(ambulance)}</span>
                               <button
@@ -1266,8 +1267,6 @@ function App() {
                               )}
                             </div>
                           </div>
-                          <span>{ambulance.zone} · ETA {ambulance.eta}</span>
-                          <small>{ambulance.crew}</small>
                         </article>
                       ))}
                     </div>
