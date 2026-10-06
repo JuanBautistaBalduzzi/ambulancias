@@ -1205,8 +1205,8 @@ summary {
 
 .operator-incidents-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.75fr);
-  gap: 12px;
+  grid-template-columns: minmax(0, 1.9fr) minmax(190px, 0.55fr);
+  gap: 8px;
   align-items: start;
 }
 
@@ -1227,9 +1227,10 @@ summary {
 
 .ambulance-sidebar {
   display: grid;
-  gap: 10px;
+  gap: 6px;
   position: sticky;
   top: 92px;
+  padding: 8px;
 }
 
 .ambulance-filter-box {
@@ -1249,7 +1250,7 @@ summary {
 
 .ambulance-sidebar-list {
   display: grid;
-  gap: 4px;
+  gap: 3px;
   max-height: calc(100vh - 230px);
   overflow-y: auto;
   padding-right: 3px;
@@ -1257,14 +1258,19 @@ summary {
 
 .ambulance-sidebar-card {
   display: grid;
-  gap: 1px;
+  gap: 0;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 7px;
   background: var(--surface-strong);
-  padding: 4px 6px;
+  padding: 3px 5px;
   box-shadow: none;
   cursor: grab;
   overflow: visible;
+}
+
+.ambulance-sidebar-card strong {
+  font-size: 0.72rem;
+  line-height: 1.1;
 }
 
 .ambulance-sidebar-card.dragging {
@@ -1357,20 +1363,20 @@ summary {
 }
 
 .ambulance-sidebar-card small {
-  font-size: 0.62rem;
-  line-height: 1.15;
+  font-size: 0.58rem;
+  line-height: 1.05;
 }
 
 .ambulance-sidebar-card .pill {
-  padding: 2px 5px;
-  font-size: 0.58rem;
-  line-height: 1.2;
+  padding: 1px 4px;
+  font-size: 0.54rem;
+  line-height: 1.1;
 }
 
 .ambulance-sidebar-card .ambulance-menu-trigger {
-  width: 20px;
-  height: 20px;
-  font-size: 0.9rem;
+  width: 17px;
+  height: 17px;
+  font-size: 0.78rem;
 }
 
 .resource-management-layout {
