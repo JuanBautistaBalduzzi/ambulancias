@@ -1133,7 +1133,7 @@ function App() {
                             setDraggedAmbulanceId(null);
                           }}
                         >
-                          <span className={`pill ${triagePillClass(incident.triageColor)}`}>{incident.category}</span>
+                          <span className={`pill ${triagePillClass(incident.triageColor)}`}>{incident.triageColor}</span>
                           <strong>{incident.nro}</strong>
                           <span className="cell-truncate">{incident.domicilio}</span>
                           <span className="cell-truncate">{incident.title}</span>

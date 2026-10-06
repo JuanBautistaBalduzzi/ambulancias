@@ -1257,11 +1257,11 @@ summary {
 
 .ambulance-sidebar-card {
   display: grid;
-  gap: 2px;
+  gap: 1px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--surface-strong);
-  padding: 6px 8px;
+  padding: 4px 6px;
   box-shadow: none;
   cursor: grab;
   overflow: visible;
@@ -1357,7 +1357,20 @@ summary {
 }
 
 .ambulance-sidebar-card small {
-  font-size: 0.68rem;
+  font-size: 0.62rem;
+  line-height: 1.15;
+}
+
+.ambulance-sidebar-card .pill {
+  padding: 2px 5px;
+  font-size: 0.58rem;
+  line-height: 1.2;
+}
+
+.ambulance-sidebar-card .ambulance-menu-trigger {
+  width: 20px;
+  height: 20px;
+  font-size: 0.9rem;
 }
 
 .resource-management-layout {
