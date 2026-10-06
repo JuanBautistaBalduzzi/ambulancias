@@ -1107,6 +1107,7 @@ function App() {
                             incident.id === incidentMenuId ? 'menu-open' : '',
                           ].join(' ').trim()}
                           key={incident.id}
+                          aria-expanded={incident.id === expandedIncidentId}
                           onClick={() => toggleRowExpand(incident.id)}
                           onDoubleClick={() => openCaseModal(incident)}
                           onKeyDown={(event) => {
@@ -1169,6 +1170,16 @@ function App() {
                               </span>
                             )}
                           </span>
+                          {incident.id === expandedIncidentId && (
+                            <div className="incident-expanded-details">
+                              <span><strong>Paciente:</strong> {incident.patient}</span>
+                              <span><strong>Zona:</strong> {incident.zone} · {incident.barrio}</span>
+                              <span><strong>Triage:</strong> {incident.triageColor}</span>
+                              <span><strong>ETA:</strong> {incident.eta}</span>
+                              <span><strong>Recurso:</strong> {incident.recursoNecesario}</span>
+                              <span><strong>Observación:</strong> {incident.note || 'Sin observaciones'}</span>
+                            </div>
+                          )}
                         </div>
                       ))}
                       {!filteredIncidents.length && (

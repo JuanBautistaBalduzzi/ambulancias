@@ -282,7 +282,10 @@
 
 .ambulance-list {
   display: grid;
-  gap: 8px;
+  gap: 4px;
+  max-height: min(42vh, 420px);
+  overflow-y: auto;
+  padding-right: 3px;
 }
 
 .ambulance-option {
@@ -292,10 +295,10 @@
   gap: 12px;
   align-items: center;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 10px;
   background: var(--surface-strong);
   color: var(--text);
-  padding: 12px 14px;
+  padding: 6px 9px;
   cursor: pointer;
   text-align: left;
 }
@@ -307,13 +310,13 @@
 
 .ambulance-option-main {
   display: grid;
-  gap: 4px;
+  gap: 2px;
   min-width: 0;
 }
 
 .ambulance-option-main span {
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
 }
 
 .ambulance-option-side {
@@ -360,6 +363,24 @@
 .filter-bar .form-input {
   width: auto;
   flex: 0 1 180px;
+}
+
+.filter-bar .compact-select,
+.filter-bar .compact-input,
+.ambulance-filter-box .compact-select {
+  min-height: 32px;
+  padding: 5px 9px;
+  border-radius: 9px;
+  font-size: 0.76rem;
+}
+
+.filter-bar .compact-select {
+  flex-basis: 118px;
+}
+
+.filter-bar .search-input {
+  min-width: 190px;
+  flex-basis: 220px;
 }
 
 .form-input::placeholder {
@@ -968,15 +989,17 @@ summary {
 .table-row.incident-grid-row {
   display: grid;
   grid-template-columns: 0.85fr 0.65fr 1.3fr 1.2fr 0.5fr 1.1fr 0.55fr 0.65fr 1.15fr;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
-  padding: 8px 10px;
-  border-radius: 14px;
+  padding: 5px 8px;
+  border-radius: 8px;
   min-width: 760px;
 }
 
 .operator-table {
   overflow-x: auto;
+  display: grid;
+  gap: 2px;
 }
 
 .incident-grid-head > *,
@@ -988,12 +1011,16 @@ summary {
 }
 
 .incident-grid-row {
-  border: 1px solid var(--line);
+  border: 0;
+  border-bottom: 1px solid var(--line);
   background: var(--surface-strong);
   color: var(--text);
   text-align: left;
   cursor: pointer;
   width: 100%;
+  min-height: 32px;
+  font-size: 0.76rem;
+  box-shadow: none;
 }
 
 .incident-grid-row:hover {
@@ -1086,6 +1113,33 @@ summary {
   text-overflow: clip;
   white-space: normal;
   word-break: break-word;
+}
+
+.incident-grid-row .pill {
+  padding: 3px 6px;
+  font-size: 0.64rem;
+}
+
+.incident-grid-row .incident-menu-trigger {
+  width: 22px;
+  height: 22px;
+  flex-basis: 22px;
+}
+
+.incident-expanded-details {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 14px;
+  padding: 7px 2px 3px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.72rem;
+  white-space: normal;
+}
+
+.incident-expanded-details strong {
+  color: var(--text);
 }
 
 .incident-grid-row.empty-row {
@@ -1195,17 +1249,20 @@ summary {
 
 .ambulance-sidebar-list {
   display: grid;
-  gap: 8px;
+  gap: 4px;
+  max-height: calc(100vh - 230px);
+  overflow-y: auto;
+  padding-right: 3px;
 }
 
 .ambulance-sidebar-card {
   display: grid;
-  gap: 4px;
+  gap: 2px;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: 10px;
   background: var(--surface-strong);
-  padding: 10px;
-  box-shadow: var(--shadow-soft);
+  padding: 6px 8px;
+  box-shadow: none;
   cursor: grab;
   overflow: visible;
 }
@@ -1300,7 +1357,7 @@ summary {
 }
 
 .ambulance-sidebar-card small {
-  font-size: 0.74rem;
+  font-size: 0.68rem;
 }
 
 .resource-management-layout {
